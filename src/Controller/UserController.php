@@ -6,21 +6,26 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\DTO\User\AddUserDTO;
 use App\DTO\User\GetUserDTO;
+use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 final class UserController extends AbstractController
 {
+    private UserService $userService;
     private EntityManagerInterface $entityManager;
     private UserRepository $userRepository;
     private SerializerInterface $serializer;
     public function __construct(
+        UserService $userService,
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer)
     {
+        $this->userService = $userService;
         $this->serializer = $serializer; 
         $this->entityManager = $entityManager;
         $this->userRepository = $entityManager->getRepository(User::class);
@@ -28,25 +33,26 @@ final class UserController extends AbstractController
     #[Route('/api/addUser', name: 'user_add', methods: ['POST'])]
     public function addUser(Request $request): JsonResponse
     {
-        $addUserDTO = $this->serializer->deserialize(
-            $request->getContent(),
-            AddUserDTO::class,
-            'json',
-            ['groups' => ['user:write']]
-        );
-        if (empty($addUserDTO->userName) || empty($addUserDTO->password)) {
-            return new JsonResponse(['error' => 'Отсутствует пароль или логин'], JsonResponse::HTTP_BAD_REQUEST);
+        $addUserDTO = null;
+        try {
+            $addUserDTO = $this->serializer->deserialize(
+                $request->getContent(),
+                AddUserDTO::class,
+                'json',
+                ['groups' => ['user:write']]
+            );
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'error' => 'Ошибка десериализации, переданы некорректные данные',
+                'message' => $e->getMessage(),
+            ], JsonResponse::HTTP_BAD_REQUEST);
+        }     
+        try{
+            $id = $this->userService->registerUser(dto: $addUserDTO);
+            return new JsonResponse(["id"=>$id], JsonResponse::HTTP_BAD_REQUEST);
+        } catch(BadRequestException $ex){
+            return new JsonResponse(["error"=>$ex->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
         }
-
-        $user = new User();
-        $user->setUserName($addUserDTO->userName);
-        $user->setPasswordHash($addUserDTO->password);
-        $user->setEmail($addUserDTO->email);
-        
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
-
-        return new JsonResponse(["id"=>$user->getId()], JsonResponse::HTTP_CREATED);
     }
     #[Route('/api/getUser/{id}', name: 'user_get', methods: ['GET'])]
     public function getUserById(int $id): JsonResponse
