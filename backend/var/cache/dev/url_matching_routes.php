@@ -8,8 +8,9 @@
 return [
     false, // $matchHost
     [ // $staticRoutes
-        '/api/addUser' => [[['_route' => 'user_add', '_controller' => 'App\\Controller\\UserController::addUser'], null, ['POST' => 0], null, false, false, null]],
-        '/api/getUser' => [[['_route' => 'user_get', '_controller' => 'App\\Controller\\UserController::getUserById'], null, ['GET' => 0], null, true, false, null]],
+        '/api/user/register' => [[['_route' => 'user_add', '_controller' => 'App\\Controller\\UserController::register'], null, ['POST' => 0], null, false, false, null]],
+        '/api/user/login' => [[['_route' => 'user_validate', '_controller' => 'App\\Controller\\UserController::login'], null, ['POST' => 0], null, false, false, null]],
+        '/api/user/get' => [[['_route' => 'user_get', '_controller' => 'App\\Controller\\UserController::getByToken'], null, ['GET' => 0], null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'

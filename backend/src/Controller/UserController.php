@@ -45,9 +45,10 @@ final class UserController extends AbstractController
             $addUserDTO = $this->serializer->deserialize(
                 $request->getContent(),
                 AddUserDTO::class,
-                'json',
+                'json', 
                 ['groups' => ['user:write']]
             );
+
         } catch (\Exception $e) {
             return new JsonResponse([
                 'error' => 'Ошибка десериализации, переданы некорректные данные',
@@ -55,13 +56,13 @@ final class UserController extends AbstractController
             ], JsonResponse::HTTP_BAD_REQUEST);
         }     
         try{
-            $token = $this->userService->registerUser(dto: $addUserDTO);
+            $token = $this->userService->registerUser($addUserDTO);
             return new JsonResponse(["authToken"=>$token], JsonResponse::HTTP_CREATED);
         } catch(BadRequestException $ex){
             return new JsonResponse(["error"=>$ex->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
         }
     }
-    #[Route('/login', name: 'user_add', methods: ['POST'])]
+    #[Route('/login', name: 'user_validate', methods: ['POST'])]
     public function login(Request $request): JsonResponse
     {
         $loginUserDTO = null;

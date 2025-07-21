@@ -5,7 +5,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class AddUserDTO
 {
     #[Groups(['user:write'])]
-    public string $userName;
+    public string $username;
     #[Groups(['user:write'])]
     public string $email;
     #[Groups(['user:write'])]

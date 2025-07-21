@@ -10,13 +10,13 @@ class GetUserDTO
     private string $email;
     #[Groups(['user:read'])]
     
-    private string $userName;
+    private string $username;
     
     public function getId() : int {return $this->id;}
     public function getEmail() : string {return $this->email;}
-    public function getUserName() : string {return $this->userName;}
+    public function getUserName() : string {return $this->username;}
     public function setId(int $id) : void {$this->id = $id;}
-    public function setUsername(string $userName) : void {$this->userName = $userName;}
+    public function setUsername(string $username) : void {$this->username = $username;}
     public function setEmail(string $email) : void {$this->email = $email;}
 
 }
