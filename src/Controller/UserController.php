@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\DTO\User\LoginUserDTO;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\DTO\User\AddUserDTO;
 use App\DTO\User\GetUserDTO;
+use App\Service\SecurityService;
 use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,24 +16,29 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+
+#[Route('/api/user')]
 final class UserController extends AbstractController
 {
     private UserService $userService;
     private EntityManagerInterface $entityManager;
     private UserRepository $userRepository;
     private SerializerInterface $serializer;
+    private SecurityService $securityService;
     public function __construct(
+        SecurityService $securityService,
         UserService $userService,
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer)
     {
+        $this->securityService = $securityService;
         $this->userService = $userService;
         $this->serializer = $serializer; 
         $this->entityManager = $entityManager;
         $this->userRepository = $entityManager->getRepository(User::class);
     }
-    #[Route('/api/addUser', name: 'user_add', methods: ['POST'])]
-    public function addUser(Request $request): JsonResponse
+    #[Route('/register', name: 'user_add', methods: ['POST'])]
+    public function register(Request $request): JsonResponse
     {
         $addUserDTO = null;
         try {
@@ -54,18 +61,40 @@ final class UserController extends AbstractController
             return new JsonResponse(["error"=>$ex->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
         }
     }
-    #[Route('/api/getUser/{id}', name: 'user_get', methods: ['GET'])]
-    public function getUserById(int $id): JsonResponse
+    #[Route('/login', name: 'user_add', methods: ['POST'])]
+    public function login(Request $request): JsonResponse
     {
-        $user = $this->userRepository->findUserById($id);
-        if(!$user)
-            return new JsonResponse(["error"=>"Ошибка получения пользователя"], JsonResponse::HTTP_BAD_REQUEST);
-
-        $userDto = new GetUserDTO();
-        $userDto->setId($user->getId());
-        $userDto->setUsername($user->getUserName());
-        $userDto->setEmail($user->getEmail());
-        $jsonContent = $this->serializer->serialize($userDto, 'json', ['groups' => ['user:read']]);
+        $loginUserDTO = null;
+        try {
+            $loginUserDTO = $this->serializer->deserialize(
+                $request->getContent(),
+                LoginUserDTO::class,
+                'json',
+                ['groups' => ['user:write']]
+            );
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'error' => 'Ошибка десериализации, переданы некорректные данные',
+                'message' => $e->getMessage(),
+            ], JsonResponse::HTTP_BAD_REQUEST);
+        }     
+        try{
+            $token = $this->userService->registerUser(dto: $loginUserDTO);
+            return new JsonResponse(["authToken"=>$token], JsonResponse::HTTP_CREATED);
+        } catch(BadRequestException $ex){
+            return new JsonResponse(["error"=>$ex->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
+        }
+    }
+    #[Route('/get', name: 'user_get', methods: ['GET'])]
+    public function getByToken(Request $request): JsonResponse
+    {
+        $authHeader = $request->headers->get('Authorization');
+        if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+            return new JsonResponse(['error' => 'Токен не предоставлен'], 401);
+        }
+        $token = $matches[1];
+        $userData = $this->securityService->parseToken($token);
+        $jsonContent = $this->serializer->serialize($userData, 'json', ['groups' => ['user:read']]);
         return JsonResponse::fromJsonString($jsonContent);
     }
 }

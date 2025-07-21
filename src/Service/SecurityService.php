@@ -38,7 +38,7 @@ class SecurityService
         $decoded = JWT::decode($token, new Key($this->secretKey, 'HS256'));
 
         $userId = $decoded->sub;
-        $userName = $decoded->userName;
+        $userName = $decoded->username;
         $email = $decoded->email;
 
         $dto = new GetUserDTO();

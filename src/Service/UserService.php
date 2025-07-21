@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\DTO\User\AddUserDTO;
+use App\DTO\User\LoginUserDTO;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -46,8 +47,21 @@ class UserService
             throw new \RuntimeException('Ошибка регистрации пользователя');
         }
     }
-    public function loginUser()
+    public function loginUser(LoginUserDTO $dto): string
     {
-        
+        if (empty($dto->userName) || empty($dto->password)) {
+            throw new BadRequestException('Отсутствует пароль или логин');
+        }
+        $user = $this->userRepository->findUserByUsername($dto->userName);
+        if(!$user)
+            throw new BadRequestException('Пользователя с таким именем не существует');
+        $passwordHash = $user->getPasswordHash();
+        if (!password_verify($dto->password, $passwordHash))
+             throw new BadRequestException('Пароли не совпадают');
+        $token = $this->securityService->generateToken(
+            $user->getId(),
+            $user->getUserName(),
+            $user->getEmail());
+        return $token;
     }
 }
