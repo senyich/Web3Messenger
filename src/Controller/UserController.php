@@ -48,8 +48,8 @@ final class UserController extends AbstractController
             ], JsonResponse::HTTP_BAD_REQUEST);
         }     
         try{
-            $id = $this->userService->registerUser(dto: $addUserDTO);
-            return new JsonResponse(["id"=>$id], JsonResponse::HTTP_BAD_REQUEST);
+            $token = $this->userService->registerUser(dto: $addUserDTO);
+            return new JsonResponse(["authToken"=>$token], JsonResponse::HTTP_CREATED);
         } catch(BadRequestException $ex){
             return new JsonResponse(["error"=>$ex->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
         }
@@ -62,9 +62,9 @@ final class UserController extends AbstractController
             return new JsonResponse(["error"=>"Ошибка получения пользователя"], JsonResponse::HTTP_BAD_REQUEST);
 
         $userDto = new GetUserDTO();
-        $userDto->id = $user->getId();
-        $userDto->userName = $user->getUserName();
-        $userDto->userName = $user->getEmail();
+        $userDto->setId($user->getId());
+        $userDto->setUsername($user->getUserName());
+        $userDto->setEmail($user->getEmail());
         $jsonContent = $this->serializer->serialize($userDto, 'json', ['groups' => ['user:read']]);
         return JsonResponse::fromJsonString($jsonContent);
     }

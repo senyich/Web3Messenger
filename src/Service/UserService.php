@@ -12,29 +12,42 @@ class UserService
 {
     private EntityManagerInterface $entityManager;
     private UserRepository $userRepository;
+    private SecurityService $securityService;
     public function __construct(
-        EntityManagerInterface $entityManager)
+        EntityManagerInterface $entityManager,
+        SecurityService $securityService)
     {
         $this->entityManager = $entityManager;
+        $this->securityService = $securityService;
         $this->userRepository = $entityManager->getRepository(User::class);
     }
-    public function registerUser(AddUserDTO $dto): int
+    public function registerUser(AddUserDTO $dto): string
     {
         if (empty($dto->userName) || empty($dto->password)) {
             throw new BadRequestException('Отсутствует пароль или логин');
         }
-        $passwordHash = password_hash($dto->password);
+        $passwordHash = password_hash($dto->password, PASSWORD_DEFAULT);
         $user = new User;
         $user->setUserName($dto->userName);
         $user->setPasswordHash($passwordHash);
         $user->setEmail($dto->email);
-
         try {
             $this->entityManager->persist($user);
             $this->entityManager->flush();
-            return $user->getId();
+
+            $token = $this
+                ->securityService
+                ->generateToken(
+                    $user->getId(), 
+                    $user->getUserName(), 
+                    $user->getEmail());
+            return $token;
         } catch (\Exception $e) {
             throw new \RuntimeException('Ошибка регистрации пользователя');
         }
+    }
+    public function loginUser()
+    {
+        
     }
 }
