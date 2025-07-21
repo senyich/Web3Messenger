@@ -24,12 +24,13 @@ class UserService
     }
     public function registerUser(AddUserDTO $dto): string
     {
-        if (empty($dto->userName) || empty($dto->password)) {
+        if (empty($dto->username) || empty($dto->password)) {
             throw new BadRequestException('Отсутствует пароль или логин');
         }
         $passwordHash = password_hash($dto->password, PASSWORD_DEFAULT);
+
         $user = new User;
-        $user->setUserName($dto->userName);
+        $user->setUserName($dto->username);
         $user->setPasswordHash($passwordHash);
         $user->setEmail($dto->email);
         try {
@@ -49,10 +50,10 @@ class UserService
     }
     public function loginUser(LoginUserDTO $dto): string
     {
-        if (empty($dto->userName) || empty($dto->password)) {
+        if (empty($dto->username) || empty($dto->password)) {
             throw new BadRequestException('Отсутствует пароль или логин');
         }
-        $user = $this->userRepository->findUserByUsername($dto->userName);
+        $user = $this->userRepository->findUserByUsername($dto->username);
         if(!$user)
             throw new BadRequestException('Пользователя с таким именем не существует');
         $passwordHash = $user->getPasswordHash();

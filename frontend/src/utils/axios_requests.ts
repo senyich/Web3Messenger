@@ -1,0 +1,54 @@
+import axios, { type AxiosResponse } from "axios";
+import type { AuthResponse, LoginParams, RegisterParams, UserInfoResponse } from "../interfaces/user_interfaces";
+
+const API_BASE_URL = 'http://localhost:8000/api';
+
+
+export const registerUser = async (params: RegisterParams): Promise<AuthResponse> => {
+  try {
+    const response: AxiosResponse<AuthResponse> = await axios.post(
+      `${API_BASE_URL}/user/register`,
+      params
+    );
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || 'Registration failed');
+    }
+    throw new Error('Registration failed');
+  }
+};
+
+export const loginUser = async (params: LoginParams): Promise<AuthResponse> => {
+  try {
+    const response: AxiosResponse<AuthResponse> = await axios.post(
+      `${API_BASE_URL}/user/login`,
+      params
+    );
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || 'Login failed');
+    }
+    throw new Error('Login failed');
+  }
+};
+
+export const getUserInfo = async (token: string): Promise<UserInfoResponse> => {
+  try {
+    const response: AxiosResponse<UserInfoResponse> = await axios.get(
+      `${API_BASE_URL}/user/get`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || 'Failed to get user info');
+    }
+    throw new Error('Failed to get user info');
+  }
+};

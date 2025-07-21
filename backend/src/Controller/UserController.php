@@ -80,7 +80,7 @@ final class UserController extends AbstractController
             ], JsonResponse::HTTP_BAD_REQUEST);
         }     
         try{
-            $token = $this->userService->registerUser(dto: $loginUserDTO);
+            $token = $this->userService->loginUser(dto: $loginUserDTO);
             return new JsonResponse(["authToken"=>$token], JsonResponse::HTTP_CREATED);
         } catch(BadRequestException $ex){
             return new JsonResponse(["error"=>$ex->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
