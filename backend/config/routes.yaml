@@ -2,4 +2,5 @@ controllers:
     resource:
         path: ../src/Controller/
         namespace: App\Controller
+        methods: [POST, OPTIONS]  
     type: attribute

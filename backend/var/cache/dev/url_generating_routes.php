@@ -4,8 +4,10 @@
 
 return [
     '_preview_error' => [['code', '_format'], ['_controller' => 'error_controller::preview', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '\\d+', 'code', true], ['text', '/_error']], [], [], []],
-    'user_add' => [[], ['_controller' => 'App\\Controller\\UserController::addUser'], [], [['text', '/api/addUser']], [], [], []],
-    'user_get' => [['id'], ['_controller' => 'App\\Controller\\UserController::getUserById'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/api/getUser']], [], [], []],
-    'App\Controller\UserController::addUser' => [[], ['_controller' => 'App\\Controller\\UserController::addUser'], [], [['text', '/api/addUser']], [], [], []],
-    'App\Controller\UserController::getUserById' => [['id'], ['_controller' => 'App\\Controller\\UserController::getUserById'], [], [['variable', '/', '[^/]++', 'id', true], ['text', '/api/getUser']], [], [], []],
+    'user_add' => [[], ['_controller' => 'App\\Controller\\UserController::register'], [], [['text', '/api/user/register']], [], [], []],
+    'user_validate' => [[], ['_controller' => 'App\\Controller\\UserController::login'], [], [['text', '/api/user/login']], [], [], []],
+    'user_get' => [[], ['_controller' => 'App\\Controller\\UserController::getByToken'], [], [['text', '/api/user/get']], [], [], []],
+    'App\Controller\UserController::register' => [[], ['_controller' => 'App\\Controller\\UserController::register'], [], [['text', '/api/user/register']], [], [], []],
+    'App\Controller\UserController::login' => [[], ['_controller' => 'App\\Controller\\UserController::login'], [], [['text', '/api/user/login']], [], [], []],
+    'App\Controller\UserController::getByToken' => [[], ['_controller' => 'App\\Controller\\UserController::getByToken'], [], [['text', '/api/user/get']], [], [], []],
 ];

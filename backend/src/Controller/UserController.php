@@ -37,7 +37,7 @@ final class UserController extends AbstractController
         $this->entityManager = $entityManager;
         $this->userRepository = $entityManager->getRepository(User::class);
     }
-    #[Route('/register', name: 'user_add', methods: ['POST'])]
+    #[Route('/register', name: 'user_add', methods: ['POST', 'OPTIONS'])]
     public function register(Request $request): JsonResponse
     {
         $addUserDTO = null;
@@ -62,7 +62,7 @@ final class UserController extends AbstractController
             return new JsonResponse(["error"=>$ex->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
         }
     }
-    #[Route('/login', name: 'user_validate', methods: ['POST'])]
+    #[Route('/login', name: 'user_validate', methods: ['POST', 'OPTIONS'])]
     public function login(Request $request): JsonResponse
     {
         $loginUserDTO = null;
@@ -86,7 +86,7 @@ final class UserController extends AbstractController
             return new JsonResponse(["error"=>$ex->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
         }
     }
-    #[Route('/get', name: 'user_get', methods: ['GET'])]
+    #[Route('/get', name: 'user_get', methods: ['GET', 'OPTIONS'])]
     public function getByToken(Request $request): JsonResponse
     {
         $authHeader = $request->headers->get('Authorization');

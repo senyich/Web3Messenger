@@ -74,6 +74,10 @@ class ComposerStaticInitaf3a971b86a4585c7c3bf9fe517e48ae
             'PhpParser\\' => 10,
             'PHPStan\\PhpDocParser\\' => 21,
         ),
+        'N' => 
+        array (
+            'Nelmio\\CorsBundle\\' => 18,
+        ),
         'F' => 
         array (
             'Firebase\\JWT\\' => 13,
@@ -279,6 +283,10 @@ class ComposerStaticInitaf3a971b86a4585c7c3bf9fe517e48ae
         'PHPStan\\PhpDocParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpstan/phpdoc-parser/src',
+        ),
+        'Nelmio\\CorsBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nelmio/cors-bundle',
         ),
         'Firebase\\JWT\\' => 
         array (
