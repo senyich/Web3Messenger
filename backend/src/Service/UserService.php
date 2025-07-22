@@ -24,9 +24,11 @@ class UserService
     }
     public function registerUser(AddUserDTO $dto): string
     {
-        if (empty($dto->username) || empty($dto->password)) {
+        if (empty($dto->username) || empty($dto->password)) 
             throw new BadRequestException('Отсутствует пароль или логин');
-        }
+        if($this->userRepository->findUserByUsername($dto->username))
+            throw new BadRequestException('Пользователь с таким именем уже существует');
+        
         $passwordHash = password_hash($dto->password, PASSWORD_DEFAULT);
 
         $user = new User;

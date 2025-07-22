@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { registerUser, loginUser, getUserInfo } from "./utils/axios_requests";
+import { loginUser, getUserInfo } from "./utils/axios_requests";
 import Footer from "./components/Layout/Footer";
 import Header from "./components/Layout/Header";
 
@@ -9,19 +9,9 @@ function App() {
   useEffect(() => {
     const testApiEndpoints = async () => {
       try {
-        const registerResponse = await registerUser({
-          username: "testuser123123",
-          email: "test@example.com",
-          password: "testpassword123",
-        });
-        setApiResponses(prev => [...prev, {
-          title: "✅ Register Success",
-          data: registerResponse
-        }]);
-
         const loginResponse = await loginUser({
-          username: "testuser123123",
-          password: "testpassword123",
+          username: "example",
+          password: "secretpassword",
         });
         setApiResponses(prev => [...prev, {
           title: "✅ Login Success",

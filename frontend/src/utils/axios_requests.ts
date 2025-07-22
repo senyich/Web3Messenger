@@ -1,7 +1,7 @@
 import axios, { type AxiosResponse } from "axios";
 import type { AuthResponse, LoginParams, RegisterParams, UserInfoResponse } from "../interfaces/user_interfaces";
 
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = '/api';
 
 
 export const registerUser = async (params: RegisterParams): Promise<AuthResponse> => {
@@ -18,12 +18,17 @@ export const registerUser = async (params: RegisterParams): Promise<AuthResponse
     throw new Error('Registration failed');
   }
 };
-
 export const loginUser = async (params: LoginParams): Promise<AuthResponse> => {
   try {
     const response: AxiosResponse<AuthResponse> = await axios.post(
       `${API_BASE_URL}/user/login`,
-      params
+      params,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      }
     );
     return response.data;
   } catch (error) {
@@ -40,7 +45,9 @@ export const getUserInfo = async (token: string): Promise<UserInfoResponse> => {
       `${API_BASE_URL}/user/get`,
       {
         headers: {
-          Authorization: `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         }
       }
     );

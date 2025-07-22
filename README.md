@@ -1,3 +1,17 @@
+Команды для Doctrine
+```bash
+php bin/console doctrine:database:drop --force &&
+php bin/console doctrine:database:create &&
+php bin/console make:migration &&
+php bin/console doctrine:migrations:migrate
+```
+Запуск проекта:
+```bash
+#в корне проекта
+docker-compose up --build
+docker-compose up -d 
+```
+
 API docs:
 
 1) Регистрация нового пользователя
