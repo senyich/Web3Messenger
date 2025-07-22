@@ -1,73 +1,19 @@
-import { useEffect, useState } from "react";
-import { loginUser, getUserInfo } from "./utils/axios_requests";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Footer from "./components/Layout/Footer";
 import Header from "./components/Layout/Header";
+import LoginForm from "./components/LoginForm";
+import RegistrationForm from './components/RegistrationForm';
 
 function App() {
-  const [apiResponses, setApiResponses] = useState<Array<{title: string, data: any}>>([]);
-
-  useEffect(() => {
-    const testApiEndpoints = async () => {
-      try {
-        const loginResponse = await loginUser({
-          username: "example",
-          password: "secretpassword",
-        });
-        setApiResponses(prev => [...prev, {
-          title: "✅ Login Success",
-          data: loginResponse
-        }]);
-
-        const userInfo = await getUserInfo(loginResponse.authToken);
-        setApiResponses(prev => [...prev, {
-          title: "✅ User Info",
-          data: userInfo
-        }]);
-
-      } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
-        setApiResponses(prev => [...prev, {
-          title: "❌ API Error",
-          data: errorMessage
-        }]);
-      }
-    };
-
-    testApiEndpoints();
-  }, []);
-
   return (
-    <>
+    <Router>
       <Header />
-      <div style={{ padding: "20px" }}>
-        <h2>API Test Results</h2>
-        
-        {apiResponses.length === 0 && <p>Testing API endpoints...</p>}
-        
-        {apiResponses.map((response, index) => (
-          <div key={index} style={{
-            marginBottom: "20px",
-            padding: "15px",
-            border: "1px solid #ddd",
-            borderRadius: "5px",
-            backgroundColor: "#f9f9f9"
-          }}>
-            <h3 style={{ marginTop: 0 }}>{response.title}</h3>
-            <pre style={{
-              whiteSpace: "pre-wrap",
-              wordWrap: "break-word",
-              backgroundColor: "#fff",
-              padding: "10px",
-              borderRadius: "3px",
-              border: "1px solid #eee"
-            }}>
-              {JSON.stringify(response.data, null, 2)}
-            </pre>
-          </div>
-        ))}
-      </div>
+      <Routes>
+        <Route path="/register" element={<RegistrationForm />} />
+        <Route path="/login" element={<LoginForm />} />
+      </Routes>
       <Footer />
-    </>
+    </Router>
   );
 }
 

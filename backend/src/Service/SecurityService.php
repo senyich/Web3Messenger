@@ -33,7 +33,7 @@ class SecurityService
     public function parseToken(string $token) : GetUserDTO
     {
         if(!$this->isTokenValid($token))
-            throw new BadRequestException('Токен невалиден');
+            throw new BadRequestException(message: 'Токен невалиден');
 
         $decoded = JWT::decode($token, new Key($this->secretKey, 'HS256'));
 

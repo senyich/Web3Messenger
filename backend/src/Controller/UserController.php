@@ -94,8 +94,13 @@ final class UserController extends AbstractController
             return new JsonResponse(['error' => 'Токен не предоставлен'], 401);
         }
         $token = $matches[1];
-        $userData = $this->securityService->parseToken($token);
-        $jsonContent = $this->serializer->serialize($userData, 'json', ['groups' => ['user:read']]);
-        return JsonResponse::fromJsonString($jsonContent);
+        try{
+            $userData = $this->securityService->parseToken($token);
+            $jsonContent = $this->serializer->serialize($userData, 'json', ['groups' => ['user:read']]);
+            return JsonResponse::fromJsonString($jsonContent);
+        } catch(BadRequestException $ex){
+            return new JsonResponse(["error"=>$ex->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
+        }
+        
     }
 }
