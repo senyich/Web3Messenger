@@ -59,3 +59,24 @@ export const getUserInfo = async (token: string): Promise<UserInfoResponse> => {
     throw new Error('Failed to get user info');
   }
 };
+export const validateJWT = async (token: string): Promise<AuthResponse> => {
+  try{
+    const responce: AxiosResponse<AuthResponse> = await axios.get(
+       `${API_BASE_URL}/user/validate`,
+       {
+        headers:{
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+       }
+    );
+    return responce.data
+  } catch (error) {
+    if(axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.error || 'Failed to validate token')
+    }
+    throw new Error('Failed to get user info');
+  }
+  
+}

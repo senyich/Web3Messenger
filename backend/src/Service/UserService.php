@@ -52,10 +52,10 @@ class UserService
     }
     public function loginUser(LoginUserDTO $dto): string
     {
-        if (empty($dto->username) || empty($dto->password)) {
+        if (empty($dto->email) || empty($dto->password)) {
             throw new BadRequestException('Отсутствует пароль или логин');
         }
-        $user = $this->userRepository->findUserByUsername($dto->username);
+        $user = $this->userRepository->findUserByEmail($dto->email);
         if(!$user)
             throw new BadRequestException('Пользователя с таким именем не существует');
         $passwordHash = $user->getPasswordHash();

@@ -163,21 +163,18 @@
     <parameter key="doctrine.migrations.preferred_em">null</parameter>
     <parameter key="doctrine.migrations.preferred_connection">null</parameter>
     <parameter key="nelmio_cors.map" type="collection">
-      <parameter key="^/api/" type="collection">
-        <parameter key="allow_origin">true</parameter>
-        <parameter key="allow_headers">true</parameter>
-        <parameter key="allow_methods" type="collection">
-          <parameter>GET</parameter>
-          <parameter>POST</parameter>
-          <parameter>OPTIONS</parameter>
-        </parameter>
-        <parameter key="max_age">3600</parameter>
-      </parameter>
+      <parameter key="^/api/" type="collection"/>
     </parameter>
     <parameter key="nelmio_cors.defaults" type="collection">
-      <parameter key="allow_origin">true</parameter>
+      <parameter key="allow_origin" type="collection">
+        <parameter>http://localhost</parameter>
+      </parameter>
       <parameter key="allow_credentials">false</parameter>
-      <parameter key="allow_headers">true</parameter>
+      <parameter key="allow_headers" type="collection">
+        <parameter>content-type</parameter>
+        <parameter>authorization</parameter>
+        <parameter>x-requested-with</parameter>
+      </parameter>
       <parameter key="allow_private_network">false</parameter>
       <parameter key="expose_headers" type="collection"/>
       <parameter key="allow_methods" type="collection">

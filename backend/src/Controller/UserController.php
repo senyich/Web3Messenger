@@ -10,6 +10,7 @@ use App\DTO\User\GetUserDTO;
 use App\Service\SecurityService;
 use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -102,5 +103,24 @@ final class UserController extends AbstractController
             return new JsonResponse(["error"=>$ex->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
         }
         
+    }
+    #[Route('/validate', name: 'user_valid', methods: ['GET', 'OPTIONS'])]
+    public function validateUser(Request $request) : JsonResponse 
+    {
+        $authHeader = $request->headers->get('Authorization');
+        if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+            return new JsonResponse(['error' => 'Токен не предоставлен'], 401);
+        }
+        $token = $matches[1];
+        try{
+            $isValid = $this->securityService->isTokenValid($token);
+            if($isValid)
+                return new JsonResponse();
+            else
+                return new JsonResponse(["error"=>"Токен невалиден"], JsonResponse::HTTP_BAD_REQUEST);
+        }
+        catch(\Exception $ex){
+            return new JsonResponse(["error"=>$ex->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
+        }
     }
 }

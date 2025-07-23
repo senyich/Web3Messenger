@@ -18,5 +18,4 @@ class GetUserDTO
     public function setId(int $id) : void {$this->id = $id;}
     public function setUsername(string $username) : void {$this->username = $username;}
     public function setEmail(string $email) : void {$this->email = $email;}
-
 }
