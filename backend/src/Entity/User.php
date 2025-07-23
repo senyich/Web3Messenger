@@ -22,11 +22,18 @@ class User
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;
+    #[ORM\Column(length: 255, nullable: true, unique: true)]
+    private ?string $googleId = null; 
 
     public function getId(): ?int {return $this->id;}
     public function getUserName(): ?string {return $this->userName;}
     public function getEmail(): ?string {return $this->email;}
     public function getPasswordHash(): ?string {return $this->passwordHash;}
+    public function getGoogleId(): ?string {return $this->googleId;}
+    public function setGoogleId(string $googleId): static
+    {
+        $this->googleId = $googleId;
+    }
     public function setUserName(string $userName): static
     {
         $this->userName = $userName;

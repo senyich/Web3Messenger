@@ -14,6 +14,8 @@ class ComposerStaticInitaf3a971b86a4585c7c3bf9fe517e48ae
         '8825ede83f2f289127722d4e842cf7e8' => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme/bootstrap.php',
         'e69f7f6ee287b969198c3c9d6777bd38' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/bootstrap.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
+        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '9d2b9fc6db0f153a0a149fefb182415e' => __DIR__ . '/..' . '/symfony/polyfill-php84/bootstrap.php',
     );
 
@@ -68,6 +70,8 @@ class ComposerStaticInitaf3a971b86a4585c7c3bf9fe517e48ae
         'P' => 
         array (
             'Psr\\Log\\' => 8,
+            'Psr\\Http\\Message\\' => 17,
+            'Psr\\Http\\Client\\' => 16,
             'Psr\\EventDispatcher\\' => 20,
             'Psr\\Container\\' => 14,
             'Psr\\Cache\\' => 10,
@@ -77,6 +81,20 @@ class ComposerStaticInitaf3a971b86a4585c7c3bf9fe517e48ae
         'N' => 
         array (
             'Nelmio\\CorsBundle\\' => 18,
+        ),
+        'L' => 
+        array (
+            'League\\OAuth2\\Client\\' => 21,
+        ),
+        'K' => 
+        array (
+            'KnpU\\OAuth2ClientBundle\\' => 24,
+        ),
+        'G' => 
+        array (
+            'GuzzleHttp\\Psr7\\' => 16,
+            'GuzzleHttp\\Promise\\' => 19,
+            'GuzzleHttp\\' => 11,
         ),
         'F' => 
         array (
@@ -264,6 +282,15 @@ class ComposerStaticInitaf3a971b86a4585c7c3bf9fe517e48ae
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
         ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Psr\\Http\\Client\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-client/src',
+        ),
         'Psr\\EventDispatcher\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/event-dispatcher/src',
@@ -287,6 +314,27 @@ class ComposerStaticInitaf3a971b86a4585c7c3bf9fe517e48ae
         'Nelmio\\CorsBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/nelmio/cors-bundle',
+        ),
+        'League\\OAuth2\\Client\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/league/oauth2-google/src',
+            1 => __DIR__ . '/..' . '/league/oauth2-client/src',
+        ),
+        'KnpU\\OAuth2ClientBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/knpuniversity/oauth2-client-bundle/src',
+        ),
+        'GuzzleHttp\\Psr7\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
+        ),
+        'GuzzleHttp\\Promise\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
+        ),
+        'GuzzleHttp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
         'Firebase\\JWT\\' => 
         array (

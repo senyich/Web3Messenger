@@ -4,10 +4,16 @@
 
 return [
     '_preview_error' => [['code', '_format'], ['_controller' => 'error_controller::preview', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '\\d+', 'code', true], ['text', '/_error']], [], [], []],
+    'connect_google' => [[], ['_controller' => 'App\\Controller\\GoogleOAuthController::connectGoogle'], [], [['text', '/connect/google']], [], [], []],
+    'connect_google_check' => [[], ['_controller' => 'App\\Controller\\GoogleOAuthController::connectGoogleCheck'], [], [['text', '/connect/google/check']], [], [], []],
     'user_add' => [[], ['_controller' => 'App\\Controller\\UserController::register'], [], [['text', '/api/user/register']], [], [], []],
     'user_validate' => [[], ['_controller' => 'App\\Controller\\UserController::login'], [], [['text', '/api/user/login']], [], [], []],
     'user_get' => [[], ['_controller' => 'App\\Controller\\UserController::getByToken'], [], [['text', '/api/user/get']], [], [], []],
+    'user_valid' => [[], ['_controller' => 'App\\Controller\\UserController::validateUser'], [], [['text', '/api/user/validate']], [], [], []],
+    'App\Controller\GoogleOAuthController::connectGoogle' => [[], ['_controller' => 'App\\Controller\\GoogleOAuthController::connectGoogle'], [], [['text', '/connect/google']], [], [], []],
+    'App\Controller\GoogleOAuthController::connectGoogleCheck' => [[], ['_controller' => 'App\\Controller\\GoogleOAuthController::connectGoogleCheck'], [], [['text', '/connect/google/check']], [], [], []],
     'App\Controller\UserController::register' => [[], ['_controller' => 'App\\Controller\\UserController::register'], [], [['text', '/api/user/register']], [], [], []],
     'App\Controller\UserController::login' => [[], ['_controller' => 'App\\Controller\\UserController::login'], [], [['text', '/api/user/login']], [], [], []],
     'App\Controller\UserController::getByToken' => [[], ['_controller' => 'App\\Controller\\UserController::getByToken'], [], [['text', '/api/user/get']], [], [], []],
+    'App\Controller\UserController::validateUser' => [[], ['_controller' => 'App\\Controller\\UserController::validateUser'], [], [['text', '/api/user/validate']], [], [], []],
 ];
