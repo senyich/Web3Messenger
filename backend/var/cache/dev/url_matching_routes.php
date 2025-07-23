@@ -10,10 +10,11 @@ return [
     [ // $staticRoutes
         '/connect/google' => [[['_route' => 'connect_google', '_controller' => 'App\\Controller\\GoogleOAuthController::connectGoogle'], null, null, null, false, false, null]],
         '/connect/google/check' => [[['_route' => 'connect_google_check', '_controller' => 'App\\Controller\\GoogleOAuthController::connectGoogleCheck'], null, null, null, false, false, null]],
+        '/api/wallet/balance' => [[['_route' => 'get_balance', '_controller' => 'App\\Controller\\TonWalletController::getBalance'], null, ['GET' => 0], null, false, false, null]],
         '/api/user/register' => [[['_route' => 'user_add', '_controller' => 'App\\Controller\\UserController::register'], null, ['POST' => 0, 'OPTIONS' => 1], null, false, false, null]],
-        '/api/user/login' => [[['_route' => 'user_validate', '_controller' => 'App\\Controller\\UserController::login'], null, ['POST' => 0, 'OPTIONS' => 1], null, false, false, null]],
+        '/api/user/login' => [[['_route' => 'user_auth', '_controller' => 'App\\Controller\\UserController::login'], null, ['POST' => 0, 'OPTIONS' => 1], null, false, false, null]],
         '/api/user/get' => [[['_route' => 'user_get', '_controller' => 'App\\Controller\\UserController::getByToken'], null, ['GET' => 0, 'OPTIONS' => 1], null, false, false, null]],
-        '/api/user/validate' => [[['_route' => 'user_valid', '_controller' => 'App\\Controller\\UserController::validateUser'], null, ['GET' => 0, 'OPTIONS' => 1], null, false, false, null]],
+        '/api/user/validate' => [[['_route' => 'user_validate', '_controller' => 'App\\Controller\\UserController::validateUser'], null, ['GET' => 0, 'OPTIONS' => 1], null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'

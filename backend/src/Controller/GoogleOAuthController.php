@@ -91,10 +91,8 @@ class GoogleOAuthController extends AbstractController
                     'lax'       
                 )
             );
-            
             return $response;
-            
-         
+    
         } catch (IdentityProviderException $e) {
             $this->addFlash('error', 'Ошибка аутентификации через Google: ' . $e->getMessage());
             return $this->redirectToRoute('app_login');

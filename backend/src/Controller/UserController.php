@@ -50,7 +50,7 @@ final class UserController extends AbstractController
                 ['groups' => ['user:write']]
             );
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return new JsonResponse([
                 'error' => 'Ошибка десериализации, переданы некорректные данные',
                 'message' => $e->getMessage(),
@@ -63,7 +63,7 @@ final class UserController extends AbstractController
             return new JsonResponse(["error"=>$ex->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
         }
     }
-    #[Route('/login', name: 'user_validate', methods: ['POST', 'OPTIONS'])]
+    #[Route('/login', name: 'user_auth', methods: ['POST', 'OPTIONS'])]
     public function login(Request $request): JsonResponse
     {
         $loginUserDTO = null;
@@ -74,10 +74,9 @@ final class UserController extends AbstractController
                 'json',
                 ['groups' => ['user:write']]
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return new JsonResponse([
                 'error' => 'Ошибка десериализации, переданы некорректные данные',
-                'message' => $e->getMessage(),
             ], JsonResponse::HTTP_BAD_REQUEST);
         }     
         try{
@@ -104,7 +103,7 @@ final class UserController extends AbstractController
         }
         
     }
-    #[Route('/validate', name: 'user_valid', methods: ['GET', 'OPTIONS'])]
+    #[Route('/validate', name: 'user_validate', methods: ['GET', 'OPTIONS'])]
     public function validateUser(Request $request) : JsonResponse 
     {
         $authHeader = $request->headers->get('Authorization');
@@ -119,7 +118,7 @@ final class UserController extends AbstractController
             else
                 return new JsonResponse(["error"=>"Токен невалиден"], JsonResponse::HTTP_BAD_REQUEST);
         }
-        catch(\Exception $ex){
+        catch(Exception $ex){
             return new JsonResponse(["error"=>$ex->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
         }
     }

@@ -1,7 +1,7 @@
 import axios, { type AxiosResponse } from "axios";
 import type { AuthResponse, LoginParams, RegisterParams, UserInfoResponse } from "../interfaces/user_interfaces";
 
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = 'http://localhost:8000/api';
 
 
 export const registerUser = async (params: RegisterParams): Promise<AuthResponse> => {
@@ -13,7 +13,7 @@ export const registerUser = async (params: RegisterParams): Promise<AuthResponse
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.message || 'Registration failed');
+      throw new Error(error.response?.data?.error || 'Registration failed');
     }
     throw new Error('Registration failed');
   }
@@ -33,7 +33,7 @@ export const loginUser = async (params: LoginParams): Promise<AuthResponse> => {
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.message || 'Login failed');
+      throw new Error(error.response?.data?.error || 'Login failed');
     }
     throw new Error('Login failed');
   }
@@ -54,7 +54,7 @@ export const getUserInfo = async (token: string): Promise<UserInfoResponse> => {
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.message || 'Failed to get user info');
+      throw new Error(error.response?.data?.error || 'Failed to get user info');
     }
     throw new Error('Failed to get user info');
   }

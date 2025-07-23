@@ -20,9 +20,9 @@ const LoginForm: React.FC = () => {
                 setIsCheckingAuth(false);
                 return;
             }
-
             try {
                 const userData: UserInfoResponse = await getUserInfo(token);
+                console.log(userData)
                 navigate('/');
             } catch (error) {
                 localStorage.removeItem('authToken');

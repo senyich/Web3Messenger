@@ -1,0 +1,72 @@
+{
+  "name": "olifanton/interop",
+  "description": "Olifanton interop library",
+  "type": "library",
+  "license": "MIT",
+  "homepage": "https://github.com/olifanton/interop",
+  "keywords": [
+    "ton",
+    "blockchain",
+    "the open network",
+    "boc",
+    "bag of cells",
+    "address",
+    "coins",
+    "olifanton"
+  ],
+  "autoload": {
+    "psr-4": {
+      "Olifanton\\Interop\\": "src/Olifanton/Interop/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Olifanton\\Interop\\Tests\\": "tests/Olifanton/Interop/Tests"
+    }
+  },
+  "authors": [
+    {
+      "name": "Roman Zaycev",
+      "email": "box@romanzaycev.ru",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=8.1",
+    "ext-mbstring": "*",
+    "olifanton/typed-arrays": "^1.0.2",
+    "myclabs/deep-copy": "^1.11",
+    "brick/math": ">=0.10"
+  },
+  "suggest": {
+    "ext-bcmath": "*",
+    "ext-sodium": "*",
+    "ext-hash": "*"
+  },
+  "require-dev": {
+    "jetbrains/phpstorm-attributes": "^1.0",
+    "overtrue/phplint": "9.3.1",
+    "phpstan/phpstan": "^1.10",
+    "phpunit/phpunit": "^9.5"
+  },
+  "scripts": {
+    "test": "XDEBUG_MODE=coverage phpunit",
+    "test:cr": "XDEBUG_MODE=coverage phpunit --coverage-html build/coverage-unit",
+    "phplint": "phplint -c .phplint.yml",
+    "phpstan": "XDEBUG_MODE=off phpstan analyse -c phpstan.neon --ansi --xdebug",
+    "checks": [
+      "@phplint",
+      "@phpstan",
+      "@test:cr"
+    ]
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "platform": {
+      "php": "8.1"
+    }
+  }
+}

@@ -207,6 +207,7 @@
       <tag name="controller.service_arguments"/>
       <tag name="routing.route_loader"/>
     </service>
+    <service id="http_discovery.psr17_factory" class="Http\Discovery\Psr17Factory"/>
     <service id="App\Entity" class="App\Entity" abstract="true">
       <tag name="container.excluded" source="in &quot;config/services.yaml&quot;"/>
     </service>
@@ -217,6 +218,14 @@
       <argument type="service" id="App\Service\SecurityService"/>
       <call method="setContainer">
         <argument type="service" id=".service_locator.ZyP9f7K.App\Controller\GoogleOAuthController"/>
+      </call>
+    </service>
+    <service id="App\Controller\TonWalletController" class="App\Controller\TonWalletController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <argument type="service" id="App\Service\TonService"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.ZyP9f7K.App\Controller\TonWalletController"/>
       </call>
     </service>
     <service id="App\Controller\UserController" class="App\Controller\UserController" public="true" autowire="true" autoconfigure="true">
@@ -237,6 +246,10 @@
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
+    <service id="App\Repository\WalletRepository" class="App\Repository\WalletRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
     <service id="App\Service\GoogleOAuthService" class="App\Service\GoogleOAuthService" autowire="true" autoconfigure="true">
       <argument type="service" id="doctrine.orm.default_entity_manager"/>
       <argument type="service" id="App\Service\SecurityService"/>
@@ -245,6 +258,7 @@
     <service id="App\Service\SecurityService" class="App\Service\SecurityService" autowire="true" autoconfigure="true">
       <argument>%env(SECRET_KEY)%</argument>
     </service>
+    <service id="App\Service\TonService" class="App\Service\TonService" autowire="true" autoconfigure="true"/>
     <service id="App\Service\UserService" class="App\Service\UserService" autowire="true" autoconfigure="true">
       <argument type="service" id="doctrine.orm.default_entity_manager"/>
       <argument type="service" id="App\Service\SecurityService"/>
@@ -2119,7 +2133,7 @@
     <service id="doctrine.orm.configuration" class="Doctrine\ORM\Configuration" abstract="true"/>
     <service id="doctrine.orm.entity_manager.abstract" class="Doctrine\ORM\EntityManager" lazy="true" abstract="true"/>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory">
-      <argument type="service" id=".service_locator.Y49rQMp"/>
+      <argument type="service" id=".service_locator.QH6zDFT"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -2846,12 +2860,18 @@
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\GoogleOAuthController" class="App\Controller\GoogleOAuthController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\GoogleOAuthController" class="App\Controller\GoogleOAuthController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\GoogleOAuthController" class="App\Controller\GoogleOAuthController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\TonWalletController" class="App\Controller\TonWalletController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\TonWalletController" class="App\Controller\TonWalletController" autowire="true" abstract="true"/>
+    <service id=".instanceof.App\Controller\TonWalletController.0.App\Controller\TonWalletController" class="App\Controller\TonWalletController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\TonWalletController" class="App\Controller\TonWalletController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\UserController" class="App\Controller\UserController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\UserController" class="App\Controller\UserController" autowire="true" abstract="true"/>
     <service id=".instanceof.App\Controller\UserController.0.App\Controller\UserController" class="App\Controller\UserController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\UserController" class="App\Controller\UserController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\WalletRepository" class="App\Repository\WalletRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\WalletRepository" class="App\Repository\WalletRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".service_locator.pRu6x_4" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -3385,10 +3405,11 @@
         <argument key="doctrine.orm.default_listeners.attach_entity_listeners" type="service_closure" id="doctrine.orm.default_listeners.attach_entity_listeners"/>
       </argument>
     </service>
-    <service id=".service_locator.Y49rQMp" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.QH6zDFT" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Repository\UserRepository" type="service_closure" id="App\Repository\UserRepository"/>
+        <argument key="App\Repository\WalletRepository" type="service_closure" id="App\Repository\WalletRepository"/>
       </argument>
     </service>
     <service id=".service_locator.BxSdgVt" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -3444,6 +3465,12 @@
     <service id=".service_locator.ZyP9f7K.App\Controller\GoogleOAuthController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\GoogleOAuthController"/>
       <argument>App\Controller\GoogleOAuthController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.ZyP9f7K" method="withContext"/>
+    </service>
+    <service id=".service_locator.ZyP9f7K.App\Controller\TonWalletController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\TonWalletController"/>
+      <argument>App\Controller\TonWalletController</argument>
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.ZyP9f7K" method="withContext"/>
     </service>
@@ -3554,6 +3581,7 @@
         <argument type="collection">
           <argument>App\Kernel</argument>
           <argument>App\Controller\GoogleOAuthController</argument>
+          <argument>App\Controller\TonWalletController</argument>
           <argument>App\Controller\UserController</argument>
           <argument>Doctrine\Bundle\DoctrineBundle\Controller\ProfilerController</argument>
         </argument>
@@ -4247,6 +4275,12 @@
         <argument key="maker.auto_command.make_webhook" type="service_closure" id=".maker.auto_command.make_webhook.lazy"/>
       </argument>
     </service>
+    <service id="Psr\Http\Message\RequestFactoryInterface" alias="http_discovery.psr17_factory"/>
+    <service id="Psr\Http\Message\ResponseFactoryInterface" alias="http_discovery.psr17_factory"/>
+    <service id="Psr\Http\Message\ServerRequestFactoryInterface" alias="http_discovery.psr17_factory"/>
+    <service id="Psr\Http\Message\StreamFactoryInterface" alias="http_discovery.psr17_factory"/>
+    <service id="Psr\Http\Message\UploadedFileFactoryInterface" alias="http_discovery.psr17_factory"/>
+    <service id="Psr\Http\Message\UriFactoryInterface" alias="http_discovery.psr17_factory"/>
     <service id="App\Kernel" alias="kernel" public="true"/>
     <service id="Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface" alias="parameter_bag"/>
     <service id="Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface" alias="parameter_bag"/>

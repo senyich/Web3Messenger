@@ -1,0 +1,62 @@
+{
+  "name": "olifanton/mnemonic",
+  "description": "PHP mnemonic generation library for TON blockchain",
+  "homepage": "https://github.com/olifanton/mnemonic",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "ton",
+    "blockchain",
+    "the open network",
+    "mnemonic",
+    "bip39",
+    "olifanton"
+  ],
+  "autoload": {
+    "psr-4": {
+      "Olifanton\\Mnemonic\\": "src/Olifanton/Mnemonic/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Olifanton\\Mnemonic\\Tests\\": "tests/Olifanton/Mnemonic/Tests/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Roman Zaycev",
+      "email": "box@romanzaycev.ru",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=8.1",
+    "ext-hash": "*",
+    "olifanton/interop": "^1.0"
+  },
+  "require-dev": {
+    "jetbrains/phpstorm-attributes": "^1.0",
+    "overtrue/phplint": "^9.0",
+    "phpstan/phpstan": "^1.10",
+    "phpunit/phpunit": "^9.5"
+  },
+  "scripts": {
+    "test": "XDEBUG_MODE=coverage phpunit",
+    "phplint": "phplint -c .phplint.yml",
+    "phpstan": "XDEBUG_MODE=off phpstan analyse -c phpstan.neon --ansi --xdebug",
+    "checks": [
+      "@phplint",
+      "@phpstan",
+      "@test"
+    ]
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "platform": {
+      "php": "8.1"
+    }
+  }
+}

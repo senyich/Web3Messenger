@@ -1,0 +1,89 @@
+{
+  "name": "olifanton/ton",
+  "description": "PHP library for The Open Network blockchain",
+  "homepage": "https://github.com/olifanton/ton",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "ton",
+    "blockchain",
+    "the open network",
+    "toncenter",
+    "olifanton"
+  ],
+  "autoload": {
+    "psr-4": {
+      "Olifanton\\Ton\\": "src/Olifanton/Ton/"
+    },
+    "files": [
+      "src/stack.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Olifanton\\Ton\\Tests\\": "tests/Olifanton/Ton/Tests/",
+      "Olifanton\\Ton\\IntegrationTests\\": "tests/Olifanton/Ton/IntegrationTests/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Roman Zaycev",
+      "email": "box@romanzaycev.ru",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=8.1",
+    "ext-json": "*",
+    "ext-sodium": "*",
+    "olifanton/interop": "^1.4",
+    "olifanton/mnemonic": "^1.0.2",
+    "php-http/client-common": "^2.0",
+    "php-http/discovery": "^1.0",
+    "php-http/httplug": "^2.0",
+    "psr/http-client-implementation": "^1.0",
+    "psr/http-factory-implementation": "^1.0",
+    "psr/log": "^1.0|^2.0|^3.0",
+    "psr/simple-cache": "^2.0|^3.0"
+  },
+  "require-dev": {
+    "cakephp/cache": "^5.0",
+    "guzzlehttp/guzzle": "^7.5",
+    "http-interop/http-factory-guzzle": "^1.2",
+    "jetbrains/phpstorm-attributes": "^1.0",
+    "mockery/mockery": "^1.5",
+    "overtrue/phplint": "9.3.1",
+    "php-http/guzzle7-adapter": "^1.0",
+    "phpstan/phpstan": "^1.9",
+    "phpunit/phpunit": "^9.5",
+    "vlucas/phpdotenv": "^5.4"
+  },
+  "scripts": {
+    "test:unit": "XDEBUG_MODE=coverage phpunit --testsuite unit",
+    "test:cr": "XDEBUG_MODE=coverage phpunit --coverage-html build/coverage-all",
+    "test:unit:cr": "XDEBUG_MODE=coverage phpunit --testsuite unit  --coverage-html build/coverage-unit",
+    "test:integration": "phpunit --testsuite integration --no-coverage",
+    "phplint": "phplint -c .phplint.yml",
+    "phpstan": "phpstan analyse -c phpstan.neon --ansi --xdebug",
+    "test": [
+      "@test:unit"
+    ],
+    "checks": [
+      "@phplint",
+      "@phpstan",
+      "@test"
+    ]
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "platform": {
+      "php": "8.1"
+    },
+    "allow-plugins": {
+      "php-http/discovery": false
+    }
+  }
+}
