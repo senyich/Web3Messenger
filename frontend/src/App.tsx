@@ -6,7 +6,7 @@ import RegistrationForm from './pages/RegistrationForm';
 
 function App() {
   return (
-    <Router>
+      <Router>
       <Header />
       <Routes>
         <Route path="/register" element={<RegistrationForm />} />

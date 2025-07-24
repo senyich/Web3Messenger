@@ -1,193 +1,85 @@
-import React, { useEffect, useState } from 'react';
-import CustomLink from '../components/CustomLink';
-import { getUserInfo, registerUser } from '../utils/axios_requests';
-import { useNavigate } from 'react-router-dom';
-import type { UserInfoResponse } from '../interfaces/user_interfaces';
+import React, { useState } from 'react';
+import { useAccount, useConnect, useDisconnect, useReadContract } from 'wagmi'
+import '@rainbow-me/rainbowkit/styles.css';
+import CustomButton from '../components/CustomButton';
+import { config } from '../utils/wagmi';
+import { BaseError, erc20Abi}  from 'viem';
+
+
+function ReadContract() {
+  const { 
+    data: balance,
+    error,
+    isPending
+  } = useReadContract({
+    address: '0x03A71968491d55603FFe1b11A9e23eF013f75bCF',
+    abi: erc20Abi,
+    functionName: 'balanceOf',
+    args: ['0x03A71968491d55603FFe1b11A9e23eF013f75bCF'],
+  })
+
+  if (isPending) return <div>Loading...</div>
+
+  if (error)
+    return (
+      <div>
+        Error: {(error as BaseError).shortMessage || error.message}
+      </div>
+    )
+
+  return (
+    <div>Balance: {balance?.toString()}</div>
+  )
+}
 
 const RegistrationForm: React.FC = () => {
-    const [formData, setFormData] = useState({
-        email: '',
-        username: '',
-        password: '',
-        confirmPassword: '',
-        acceptedTerms: false
-    });
-    const [error, setError] = useState<string | null>(null);
-    const [isCheckingAuth, setIsCheckingAuth] = useState(true);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        async function checkAuth() {
-            const token: string | null = localStorage.getItem('authToken');
-            if (!token) {
-                setIsCheckingAuth(false);
-                return;
-            }
-
-            try {
-                const userData: UserInfoResponse = await getUserInfo(token);
-                console.log(userData);
-                navigate('/');
-            } catch (error) {
-                localStorage.removeItem('authToken');
-                setIsCheckingAuth(false);
-                console.error('Ошибка при проверке авторизации', error);
-            }
-        }
-
-        checkAuth();
-    }, [navigate]);
-
-    const handleFormUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { id, value, type, checked } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [id]: type === 'checkbox' ? checked : value
-        }));
-    };
-
-    const handleFormSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setError(null);
-
-        if (!formData.acceptedTerms) {
-            setError('Необходимо принять условия пользования');
-            return;
-        }
-
-        if (formData.password !== formData.confirmPassword) {
-            setError('Пароли не совпадают');
-            return;
-        }
-
-        try {
-            const { email, username, password } = formData;
-            const response = await registerUser({ email, username, password });
-            localStorage.setItem('authToken', response.authToken);
-            navigate('/');
-        } catch (err) {
-            setError(err instanceof Error ? err.message : 'Произошла ошибка при регистрации');
-        }
-    };
-
-    if (isCheckingAuth) {
-        return (
-            <div className="min-h-screen bg-beigeBrown-50 flex items-center justify-center">
-                <div className="text-beigeBrown-800 text-lg">Проверка авторизации...</div>
-            </div>
-        );
-    }
-
+    const account = useAccount()
+    const { connectors, connect, status, error } = useConnect()
+    const { disconnect } = useDisconnect()
     return (
-        <div className="min-h-screen bg-beigeBrown-50">
-            <div className="container mx-auto px-6 py-16 max-w-lg"> 
-                <div className="bg-white rounded-xl shadow-lg p-8">
-                    <div className="text-center mb-8">
-                        <div className="flex justify-center mb-4">
-                            <div className="bg-beigeBrown-500 w-12 h-12 rounded-full flex items-center justify-center">
-                                <span className="text-white font-bold text-xl">B</span>
-                            </div>
-                        </div>
-                        <h2 className="text-2xl font-bold text-beigeBrown-800">
-                            Создайте аккаунт
-                        </h2>
-                        <p className="text-beigeBrown-500 mt-2">
-                            Уже есть аккаунт?{' '}
-                            <CustomLink href="/login" variant="primary">
-                                Войти
-                            </CustomLink>
-                        </p>
-                    </div>
+        <div className="min-h-screen bg-beigeBrown-50 p-8">
+            <div className="bg-white p-6 rounded-lg shadow-md mb-8 max-w-2xl mx-auto">
+                <h2 className="text-2xl font-bold text-beigeBrown-800 mb-4">ТЕСТ</h2>
 
-                    {error && (
-                        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">
-                            {error}
-                        </div>
-                    )}
-
-                    <form className="space-y-6" onSubmit={handleFormSubmit}>
-                        <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-beigeBrown-700 mb-1">
-                                Email
-                            </label>
-                            <input
-                                type="email"
-                                id="email"
-                                className="w-full px-4 py-3 rounded-lg border border-beigeBrown-300 focus:ring-2 focus:ring-beigeBrown-500 focus:border-beigeBrown-500 outline-none transition"
-                                placeholder="your@email.com"
-                                required
-                                value={formData.email}
-                                onChange={handleFormUpdate}
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="username" className="block text-sm font-medium text-beigeBrown-700 mb-1">
-                                Имя пользователя
-                            </label>
-                            <input
-                                type="text"
-                                id="username"
-                                className="w-full px-4 py-3 rounded-lg border border-beigeBrown-300 focus:ring-2 focus:ring-beigeBrown-500 focus:border-beigeBrown-500 outline-none transition"
-                                placeholder="babuin123"
-                                required
-                                value={formData.username}
-                                onChange={handleFormUpdate}
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-beigeBrown-700 mb-1">
-                                Пароль
-                            </label>
-                            <input
-                                type="password"
-                                id="password"
-                                className="w-full px-4 py-3 rounded-lg border border-beigeBrown-300 focus:ring-2 focus:ring-beigeBrown-500 focus:border-beigeBrown-500 outline-none transition"
-                                placeholder="••••••••"
-                                required
-                                value={formData.password}
-                                onChange={handleFormUpdate}
-                            />
-                        </div>
-
-                        <div>
-                            <label htmlFor="confirmPassword" className="block text-sm font-medium text-beigeBrown-700 mb-1">
-                                Подтверждение пароля
-                            </label>
-                            <input
-                                type="password"
-                                id="confirmPassword"
-                                className="w-full px-4 py-3 rounded-lg border border-beigeBrown-300 focus:ring-2 focus:ring-beigeBrown-500 focus:border-beigeBrown-500 outline-none transition"
-                                placeholder="••••••••"
-                                required
-                                value={formData.confirmPassword}
-                                onChange={handleFormUpdate}
-                            />
-                        </div>
-
-                        <div className="flex items-center">
-                            <input
-                                id="acceptedTerms"
-                                type="checkbox"
-                                className="h-4 w-4 text-beigeBrown-600 focus:ring-beigeBrown-500 border-beigeBrown-300 rounded"
-                                checked={formData.acceptedTerms}
-                                onChange={handleFormUpdate}
-                                required
-                            />
-                            <label htmlFor="acceptedTerms" className="ml-2 block text-sm text-beigeBrown-700">
-                                Я согласен с <CustomLink href="#" variant="secondary">условиями пользования</CustomLink>
-                            </label>
-                        </div>
-
-                        <button
-                            type="submit"
-                            className="w-full bg-beigeBrown-600 hover:bg-beigeBrown-700 text-white font-medium py-3 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-beigeBrown-500 focus:ring-offset-2"
-                        >
-                            Зарегистрироваться
-                        </button>
-                    </form>
+                <div className="space-y-2 text-beigeBrown-700">
+                    <p><span className="font-semibold">Статус подключения:</span> {account.status}</p>
+                    <p><span className="font-semibold">Адреса:</span> {(account.chain?.name)}: {"["}{account.address}{"]"}</p>
+                    <p><span className="font-semibold">Баланс: <ReadContract/></span></p>
                 </div>
+
+                {account.status === 'connected' && (
+                    <button 
+                        type="button" 
+                        onClick={() => disconnect()}
+                        className="mt-4 px-4 py-2 bg-beigeBrown-600 text-white rounded-md hover:bg-beigeBrown-700 transition-colors"
+                    >
+                        Disconnect
+                    </button>
+                )}
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto">
+                <h2 className="text-2xl font-bold text-beigeBrown-800 mb-4">Connect</h2>
+                
+                <div className="grid grid-cols-1 gap-3 mb-4">
+                    {connectors.map((connector) => (
+                        <CustomButton
+                            key={connector.uid}
+                            onClick={() => connect({ connector })}
+                        >
+                            {connector.icon
+                             ? <img src = {connector.icon} alt = {connector.name} width="50"></img>
+                             : connector.name}
+                        </CustomButton>
+                    ))}
+                </div>
+
+                {status && (
+                    <div className="p-3 bg-beigeBrown-100 rounded-md text-beigeBrown-700 mb-3">
+                        Status: {status}
+                    </div>
+                )}
+
             </div>
         </div>
     );

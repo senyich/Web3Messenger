@@ -11,7 +11,7 @@ const Header: React.FC = () => {
               <span className="text-white font-bold text-xl">B</span>
             </div>
             <h1 className="text-2xl font-bold text-beigeBrown-800 tracking-tight">
-              Babuin<span className="text-beigeBrown-500">Hosting</span>
+              Babuin<span className="text-beigeBrown-500">Web3</span>
             </h1>
           </div>
           <nav className="hidden md:flex items-center space-x-8">
@@ -20,18 +20,6 @@ const Header: React.FC = () => {
               className="text-beigeBrown-700 hover:text-beigeBrown-500 font-medium transition-colors"
             >
               Возможные активности
-            </a>
-            <a 
-              href="#" 
-              className="text-beigeBrown-700 hover:text-beigeBrown-500 font-medium transition-colors"
-            >
-              Социальные сети
-            </a>
-            <a 
-              href="#" 
-              className="text-beigeBrown-700 hover:text-beigeBrown-500 font-medium transition-colors"
-            >
-              О создателе
             </a>
           </nav>
 

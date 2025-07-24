@@ -12,11 +12,11 @@ const Footer: React.FC = () => {
                 <span className="text-white font-bold">B</span>
               </div>
               <h2 className="text-xl font-bold text-white">
-                BabuinHosting
+                BabuinWeb3
               </h2>
             </div>
             <p className="text-beigeBrown-300 mb-4">
-              Сайт для хостинга ваших видео, сообщений, ордеров и многого другого
+              Web3 пет проект
             </p>
             <div className="flex space-x-3">
               {['twitter', 'facebook', 'instagram', 'linkedin'].map((social) => (
@@ -34,7 +34,7 @@ const Footer: React.FC = () => {
         </div>
         <div className="border-t border-beigeBrown-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-beigeBrown-500 mb-4 md:mb-0">
-            © {new Date().getFullYear()} BabuinHosting. Все права защищены.
+            © {new Date().getFullYear()} BabuinWeb3. Все права защищены.
           </p>
           <div className="flex space-x-6">
             <a href="#" className="text-beigeBrown-500 hover:text-beigeBrown-300 transition-colors">
