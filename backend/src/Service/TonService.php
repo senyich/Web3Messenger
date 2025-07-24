@@ -11,7 +11,7 @@ use Olifanton\Ton\Transports\Toncenter\ToncenterTransport;
 
 class TonService
 {
-    private bool $isMainnet = false;
+    private bool $isMainnet = true;
     private string $apiKey = "fdb59a6a05a987c582db39e58228fded02d6d0e98c691e60b3bed72c885d6f00";
     private HttpMethodsClient $httpClient;
     private ToncenterHttpV2Client $toncenter;

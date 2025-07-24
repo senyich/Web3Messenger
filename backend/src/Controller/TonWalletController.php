@@ -31,10 +31,10 @@ final class TonWalletController extends AbstractController
         
         try {
             $balance = $this->tonService->getWalletBalance($address);
-            return new JsonResponse(['balance' => $balance]);
+            return new JsonResponse(['balance' => (string)$balance]);
         } catch (\Exception $e) {
             return new JsonResponse(
-                ['error' => 'Ошибка при получении баланса кошелька: ' . $e->getMessage()], 
+                ['error' =>  $e->getMessage()], 
                 JsonResponse::HTTP_INTERNAL_SERVER_ERROR
             );
         }
