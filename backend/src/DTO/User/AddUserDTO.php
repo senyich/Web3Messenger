@@ -7,7 +7,7 @@ class AddUserDTO
     #[Groups(['user:write'])]
     public string $username;
     #[Groups(['user:write'])]
-    public string $email;
+    public string $address;
     #[Groups(['user:write'])]
     public string $password;
 

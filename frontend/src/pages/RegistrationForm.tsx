@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useAccount, useConnect, useDisconnect, useReadContract } from 'wagmi'
 import '@rainbow-me/rainbowkit/styles.css';
 import CustomButton from '../components/CustomButton';
-import { config } from '../utils/wagmi';
 import { BaseError, erc20Abi}  from 'viem';
 
 
@@ -14,8 +13,7 @@ function ReadContract() {
   } = useReadContract({
     address: '0x03A71968491d55603FFe1b11A9e23eF013f75bCF',
     abi: erc20Abi,
-    functionName: 'balanceOf',
-    args: ['0x03A71968491d55603FFe1b11A9e23eF013f75bCF'],
+    functionName: 'balanceOf'
   })
 
   if (isPending) return <div>Loading...</div>
@@ -44,7 +42,7 @@ const RegistrationForm: React.FC = () => {
                 <div className="space-y-2 text-beigeBrown-700">
                     <p><span className="font-semibold">Статус подключения:</span> {account.status}</p>
                     <p><span className="font-semibold">Адреса:</span> {(account.chain?.name)}: {"["}{account.address}{"]"}</p>
-                    <p><span className="font-semibold">Баланс: <ReadContract/></span></p>
+                    <p><span className="font-semibold">Баланс: <ReadContract  /></span></p>
                 </div>
 
                 {account.status === 'connected' && (

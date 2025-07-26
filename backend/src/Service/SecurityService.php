@@ -15,7 +15,7 @@ class SecurityService
     {
         $this->secretKey = $secretKey;
     }
-    public function generateToken(int $id, string $userName, string $email): string
+    public function generateToken(int $id, string $userName, string $address): string
     {
         $issuedAt   = time();
         $expire     = $issuedAt + 3600;
@@ -23,7 +23,7 @@ class SecurityService
             'iss' => 'your_issuer',       
             'sub' => $id, 
             'username' => $userName, 
-            'email' => $email,
+            'address' => $address,
             'iat' => $issuedAt,            
             'exp' => $expire,               
             'role' => 'user'];
@@ -38,13 +38,13 @@ class SecurityService
         $decoded = JWT::decode($token, new Key($this->secretKey, 'HS256'));
 
         $userId = $decoded->sub;
-        $userName = $decoded->username;
-        $email = $decoded->email;
+        $username = $decoded->username;
+        $address = $decoded->email;
 
         $dto = new GetUserDTO();
         $dto->setId($userId);
-        $dto->setUsername($userName);
-        $dto->setEmail($email);
+        $dto->setUsername($username);
+        $dto->setAddress($address);
         
         return $dto;
     }

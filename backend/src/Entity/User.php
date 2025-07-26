@@ -16,24 +16,14 @@ class User
 
     #[ORM\Column(length: 50, unique: true)]
     private ?string $userName = null;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50, unique: true)]
+    private ?string $address = null;
+    #[ORM\Column(length: 50)]
     private ?string $passwordHash = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
-    #[ORM\Column(length: 255, nullable: true, unique: true)]
-    private ?string $googleId = null; 
-
     public function getId(): ?int {return $this->id;}
     public function getUserName(): ?string {return $this->userName;}
-    public function getEmail(): ?string {return $this->email;}
     public function getPasswordHash(): ?string {return $this->passwordHash;}
-    public function getGoogleId(): ?string {return $this->googleId;}
-    public function setGoogleId(string $googleId): static
-    {
-        $this->googleId = $googleId;
-    }
+    public function getAddress(): ?string {return $this->address;}
     public function setUserName(string $userName): static
     {
         $this->userName = $userName;
@@ -44,9 +34,9 @@ class User
         $this->passwordHash = $passwordHash;
         return $this;
     }
-    public function setEmail(string $email): static
+    public function setAddress(string $address): static
     {
-        $this->email = $email;
+        $this->address = $address;
         return $this;
     }
 }

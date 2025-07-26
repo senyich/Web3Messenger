@@ -24,27 +24,24 @@ class UserService
     }
     public function registerUser(AddUserDTO $dto): string
     {
-        if (empty($dto->username) || empty($dto->password)) 
-            throw new BadRequestException('Отсутствует пароль или логин');
-        if($this->userRepository->findUserByUsername($dto->username))
-            throw new BadRequestException('Пользователь с таким именем уже существует');
-        
+        if (empty($dto->username)  || empty($dto->address) || empty($dto->password)) 
+            throw new BadRequestException('Отсутствует логин или адрес');
+        if($this->userRepository->findUserByUsername($dto->username) 
+            || $this->userRepository->findUserByAddress($dto->address))
+            throw new BadRequestException('Пользователь уже существует, перейдите на страницу авторизации');
         $passwordHash = password_hash($dto->password, PASSWORD_DEFAULT);
-
         $user = new User;
         $user->setUserName($dto->username);
-        $user->setPasswordHash($passwordHash);
-        $user->setEmail($dto->email);
+        $user->setAddress($dto->address);
         try {
             $this->entityManager->persist($user);
             $this->entityManager->flush();
-
             $token = $this
                 ->securityService
                 ->generateToken(
                     $user->getId(), 
                     $user->getUserName(), 
-                    $user->getEmail());
+                    $user->getAddress());
             return $token;
         } catch (\Exception $e) {
             throw new \RuntimeException('Ошибка регистрации пользователя');
@@ -52,19 +49,19 @@ class UserService
     }
     public function loginUser(LoginUserDTO $dto): string
     {
-        if (empty($dto->email) || empty($dto->password)) {
-            throw new BadRequestException('Отсутствует пароль или логин');
+        if (empty($dto->address) || empty($dto->password)) {
+            throw new BadRequestException('Отсутствует пароль или идентификатор блокчейна');
         }
-        $user = $this->userRepository->findUserByEmail($dto->email);
+        $user = $this->userRepository->findUserByAddress($dto->address);
         if(!$user)
-            throw new BadRequestException('Пользователя с таким именем не существует');
+            throw new BadRequestException('Пользователь не зарегистрирован');
         $passwordHash = $user->getPasswordHash();
         if (!password_verify($dto->password, $passwordHash))
-             throw new BadRequestException('Пароли не совпадают');
+             throw new BadRequestException('Неверный пароль');
         $token = $this->securityService->generateToken(
             $user->getId(),
             $user->getUserName(),
-            $user->getEmail());
+            $user->getAddress());
         return $token;
     }
 }
