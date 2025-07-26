@@ -1,8 +1,8 @@
 import axios, { type AxiosResponse } from "axios";
 import type { AuthResponse, LoginParams, RegisterParams, UserInfoResponse } from "../interfaces/user_interfaces";
 
-const API_BASE_URL = '/api';
-
+// const API_BASE_URL = '/api';
+const API_BASE_URL = 'http://localhost:8001/api';
 
 export const registerUser = async (params: RegisterParams): Promise<AuthResponse> => {
   try {

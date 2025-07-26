@@ -39,7 +39,7 @@ class SecurityService
 
         $userId = $decoded->sub;
         $username = $decoded->username;
-        $address = $decoded->email;
+        $address = $decoded->address;
 
         $dto = new GetUserDTO();
         $dto->setId($userId);

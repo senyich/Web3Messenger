@@ -33,6 +33,7 @@ class UserService
         $user = new User;
         $user->setUserName($dto->username);
         $user->setAddress($dto->address);
+        $user->setPasswordHash($passwordHash);
         try {
             $this->entityManager->persist($user);
             $this->entityManager->flush();
@@ -44,7 +45,7 @@ class UserService
                     $user->getAddress());
             return $token;
         } catch (\Exception $e) {
-            throw new \RuntimeException('Ошибка регистрации пользователя');
+            throw new \RuntimeException('Ошибка регистрации пользователя'.$e->getMessage());
         }
     }
     public function loginUser(LoginUserDTO $dto): string

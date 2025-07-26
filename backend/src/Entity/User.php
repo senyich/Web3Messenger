@@ -18,7 +18,7 @@ class User
     private ?string $userName = null;
     #[ORM\Column(length: 50, unique: true)]
     private ?string $address = null;
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 350)]
     private ?string $passwordHash = null;
     public function getId(): ?int {return $this->id;}
     public function getUserName(): ?string {return $this->userName;}

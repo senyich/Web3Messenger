@@ -4,17 +4,17 @@ export interface AuthResponse {
 
 export interface UserInfoResponse {
   id: number;
-  email: string;
+  address: string;
   username: string;
 }
 
 export interface RegisterParams {
   username: string;
-  email: string;
+  address: string;
   password: string;
 }
 
 export interface LoginParams {
-  email: string;
+  address: string;
   password: string;
 }
