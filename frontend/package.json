@@ -10,14 +10,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@helia/json": "^4.0.7",
+    "@helia/strings": "^4.0.7",
     "@rainbow-me/rainbowkit": "^2.2.8",
     "@tanstack/react-query": "^5.83.0",
     "axios": "^1.10.0",
+    "helia": "^5.5.0",
+    "multiformats": "^13.3.7",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.7.0",
     "react-toastify": "^11.0.5",
+    "uint8arrays": "^5.1.0",
     "viem": "^2.33.0",
     "wagmi": "^2.16.0"
   },

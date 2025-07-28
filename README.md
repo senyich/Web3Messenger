@@ -52,7 +52,7 @@ Responce
 Request
 ```bash
 curl -X GET http://localhost:8000/api/user/get \
- -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ5b3VyX2lzc3VlciIsInN1YiI6MSwidXNlcm5hbWUiOiJ1c2VyMSIsImFkZHJlc3MiOiIweDMyQmUzNDNCOTRmODYwMTI0ZEM0ZkVlMjc4RkRDQkQzOEMxMDJEODgiLCJpYXQiOjE3NTM1Mjc4NTIsImV4cCI6MTc1MzUzMTQ1Miwicm9sZSI6InVzZXIifQ.8-Wejfg8CPov5CkRbtNomFmce2YTXwlBylhQM4h8ACQ"
+ -H "Authorization: Bearer TOKEN HERE"
 ```
 Responce
 ```json
@@ -61,4 +61,46 @@ Responce
    "address":"0x32Be343B94f860124dC4fEe278FDCBD38C102D88",
    "username":"exampleuser"
 }
+```
+
+Request
+```bash
+curl -X GET \
+  http://localhost:8001/api/message/get \
+  -H 'Authorization: Bearer TOKEN' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "ownerAddress": "0x32Be343B94f860124dC4fEe278FDCBD38C102D88"
+  }'
+
+```
+Responce
+```json
+[
+   {
+      "CID":"QmXYZ...123",
+      "ownerAddress":"0x32Be343B94f860124dC4fEe278FDCBD38C102D88",
+      "timestamp":"2023-05-15T00:00:00+00:00"
+   },
+   {
+      "CID":"QmXYZ...123",
+      "ownerAddress":"0x32Be343B94f860124dC4fEe278FDCBD38C102D88",
+      "timestamp":"2023-05-15T00:00:00+00:00"
+   },
+]
+```
+Request
+```bash
+curl -X POST \
+  http://localhost:8001/api/message/add \
+  -H 'Authorization: Bearer TOKEN' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "CID": "QmXYZ...123",
+    "timestamp": "2023-05-15T12:00:00Z"
+  }'
+```
+Responce
+```bash
+HTTP OK
 ```

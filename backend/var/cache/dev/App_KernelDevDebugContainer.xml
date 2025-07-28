@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
   <parameters>
-    <parameter key="kernel.project_dir">/home/senyacm/github/php/www.MbsHosting.com/backend</parameter>
+    <parameter key="kernel.project_dir">/home/senyacm/github/php/PHP_pet_project/backend</parameter>
     <parameter key="kernel.environment">dev</parameter>
     <parameter key="kernel.runtime_environment">%env(default:kernel.environment:APP_RUNTIME_ENV)%</parameter>
     <parameter key="kernel.runtime_mode">%env(query_string:default:container.runtime_mode:APP_RUNTIME_MODE)%</parameter>
@@ -9,9 +9,9 @@
     <parameter key="kernel.runtime_mode.cli">%env(not:default:kernel.runtime_mode.web:)%</parameter>
     <parameter key="kernel.runtime_mode.worker">%env(bool:default::key:worker:default:kernel.runtime_mode:)%</parameter>
     <parameter key="kernel.debug">true</parameter>
-    <parameter key="kernel.build_dir">/home/senyacm/github/php/www.MbsHosting.com/backend/var/cache/dev</parameter>
-    <parameter key="kernel.cache_dir">/home/senyacm/github/php/www.MbsHosting.com/backend/var/cache/dev</parameter>
-    <parameter key="kernel.logs_dir">/home/senyacm/github/php/www.MbsHosting.com/backend/var/log</parameter>
+    <parameter key="kernel.build_dir">/home/senyacm/github/php/PHP_pet_project/backend/var/cache/dev</parameter>
+    <parameter key="kernel.cache_dir">/home/senyacm/github/php/PHP_pet_project/backend/var/cache/dev</parameter>
+    <parameter key="kernel.logs_dir">/home/senyacm/github/php/PHP_pet_project/backend/var/log</parameter>
     <parameter key="kernel.bundles" type="collection">
       <parameter key="FrameworkBundle">Symfony\Bundle\FrameworkBundle\FrameworkBundle</parameter>
       <parameter key="DoctrineBundle">Doctrine\Bundle\DoctrineBundle\DoctrineBundle</parameter>
@@ -22,27 +22,27 @@
     </parameter>
     <parameter key="kernel.bundles_metadata" type="collection">
       <parameter key="FrameworkBundle" type="collection">
-        <parameter key="path">/home/senyacm/github/php/www.MbsHosting.com/backend/vendor/symfony/framework-bundle</parameter>
+        <parameter key="path">/home/senyacm/github/php/PHP_pet_project/backend/vendor/symfony/framework-bundle</parameter>
         <parameter key="namespace">Symfony\Bundle\FrameworkBundle</parameter>
       </parameter>
       <parameter key="DoctrineBundle" type="collection">
-        <parameter key="path">/home/senyacm/github/php/www.MbsHosting.com/backend/vendor/doctrine/doctrine-bundle</parameter>
+        <parameter key="path">/home/senyacm/github/php/PHP_pet_project/backend/vendor/doctrine/doctrine-bundle</parameter>
         <parameter key="namespace">Doctrine\Bundle\DoctrineBundle</parameter>
       </parameter>
       <parameter key="DoctrineMigrationsBundle" type="collection">
-        <parameter key="path">/home/senyacm/github/php/www.MbsHosting.com/backend/vendor/doctrine/doctrine-migrations-bundle</parameter>
+        <parameter key="path">/home/senyacm/github/php/PHP_pet_project/backend/vendor/doctrine/doctrine-migrations-bundle</parameter>
         <parameter key="namespace">Doctrine\Bundle\MigrationsBundle</parameter>
       </parameter>
       <parameter key="MakerBundle" type="collection">
-        <parameter key="path">/home/senyacm/github/php/www.MbsHosting.com/backend/vendor/symfony/maker-bundle</parameter>
+        <parameter key="path">/home/senyacm/github/php/PHP_pet_project/backend/vendor/symfony/maker-bundle</parameter>
         <parameter key="namespace">Symfony\Bundle\MakerBundle</parameter>
       </parameter>
       <parameter key="NelmioCorsBundle" type="collection">
-        <parameter key="path">/home/senyacm/github/php/www.MbsHosting.com/backend/vendor/nelmio/cors-bundle</parameter>
+        <parameter key="path">/home/senyacm/github/php/PHP_pet_project/backend/vendor/nelmio/cors-bundle</parameter>
         <parameter key="namespace">Nelmio\CorsBundle</parameter>
       </parameter>
       <parameter key="KnpUOAuth2ClientBundle" type="collection">
-        <parameter key="path">/home/senyacm/github/php/www.MbsHosting.com/backend/vendor/knpuniversity/oauth2-client-bundle/src</parameter>
+        <parameter key="path">/home/senyacm/github/php/PHP_pet_project/backend/vendor/knpuniversity/oauth2-client-bundle/src</parameter>
         <parameter key="namespace">KnpU\OAuth2ClientBundle</parameter>
       </parameter>
     </parameter>
@@ -77,17 +77,17 @@
     <parameter key="kernel.trusted_headers">%env(default::SYMFONY_TRUSTED_HEADERS)%</parameter>
     <parameter key="debug.file_link_format">%env(default::SYMFONY_IDE)%</parameter>
     <parameter key="debug.error_handler.throw_at">-1</parameter>
-    <parameter key="debug.container.dump">/home/senyacm/github/php/www.MbsHosting.com/backend/var/cache/dev/App_KernelDevDebugContainer.xml</parameter>
+    <parameter key="debug.container.dump">/home/senyacm/github/php/PHP_pet_project/backend/var/cache/dev/App_KernelDevDebugContainer.xml</parameter>
     <parameter key="router.request_context.host">localhost</parameter>
     <parameter key="router.request_context.scheme">http</parameter>
     <parameter key="router.request_context.base_url"></parameter>
     <parameter key="router.resource">kernel::loadRoutes</parameter>
-    <parameter key="router.cache_dir">/home/senyacm/github/php/www.MbsHosting.com/backend/var/cache/dev</parameter>
+    <parameter key="router.cache_dir">/home/senyacm/github/php/PHP_pet_project/backend/var/cache/dev</parameter>
     <parameter key="request_listener.http_port">80</parameter>
     <parameter key="request_listener.https_port">443</parameter>
-    <parameter key="serializer.mapping.cache.file">/home/senyacm/github/php/www.MbsHosting.com/backend/var/cache/dev/serialization.php</parameter>
+    <parameter key="serializer.mapping.cache.file">/home/senyacm/github/php/PHP_pet_project/backend/var/cache/dev/serialization.php</parameter>
     <parameter key=".serializer.named_serializers" type="collection"/>
-    <parameter key="cache.prefix.seed">_/home/senyacm/github/php/www.MbsHosting.com/backend.App_KernelDevDebugContainer</parameter>
+    <parameter key="cache.prefix.seed">_/home/senyacm/github/php/PHP_pet_project/backend.App_KernelDevDebugContainer</parameter>
     <parameter key="session.metadata.storage_key">_sf2_meta</parameter>
     <parameter key="session.storage.options" type="collection">
       <parameter key="cache_limiter" type="string">0</parameter>
@@ -163,7 +163,7 @@
     <parameter key="doctrine.orm.second_level_cache.regions_configuration.class">Doctrine\ORM\Cache\RegionsConfiguration</parameter>
     <parameter key="doctrine.orm.auto_generate_proxy_classes">true</parameter>
     <parameter key="doctrine.orm.enable_lazy_ghost_objects">true</parameter>
-    <parameter key="doctrine.orm.proxy_dir">/home/senyacm/github/php/www.MbsHosting.com/backend/var/cache/dev/doctrine/orm/Proxies</parameter>
+    <parameter key="doctrine.orm.proxy_dir">/home/senyacm/github/php/PHP_pet_project/backend/var/cache/dev/doctrine/orm/Proxies</parameter>
     <parameter key="doctrine.orm.proxy_namespace">Proxies</parameter>
     <parameter key="doctrine.migrations.preferred_em">null</parameter>
     <parameter key="doctrine.migrations.preferred_connection">null</parameter>
@@ -211,21 +211,15 @@
     <service id="App\Entity" class="App\Entity" abstract="true">
       <tag name="container.excluded" source="in &quot;config/services.yaml&quot;"/>
     </service>
-    <service id="App\Controller\GoogleOAuthController" class="App\Controller\GoogleOAuthController" public="true" autowire="true" autoconfigure="true">
+    <service id="App\Controller\IPFSMessagesController" class="App\Controller\IPFSMessagesController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
       <argument type="service" id="doctrine.orm.default_entity_manager"/>
       <argument type="service" id="App\Service\SecurityService"/>
+      <argument type="service" id="App\Service\UserService"/>
+      <argument type="service" id="serializer"/>
       <call method="setContainer">
-        <argument type="service" id=".service_locator.ZyP9f7K.App\Controller\GoogleOAuthController"/>
-      </call>
-    </service>
-    <service id="App\Controller\TonWalletController" class="App\Controller\TonWalletController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="container.service_subscriber"/>
-      <argument type="service" id="App\Service\TonService"/>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.ZyP9f7K.App\Controller\TonWalletController"/>
+        <argument type="service" id=".service_locator.ZyP9f7K.App\Controller\IPFSMessagesController"/>
       </call>
     </service>
     <service id="App\Controller\UserController" class="App\Controller\UserController" public="true" autowire="true" autoconfigure="true">
@@ -239,9 +233,15 @@
         <argument type="service" id=".service_locator.ZyP9f7K.App\Controller\UserController"/>
       </call>
     </service>
+    <service id="App\DTO\Message\AddMessageDTO" class="App\DTO\Message\AddMessageDTO" autowire="true" autoconfigure="true"/>
+    <service id="App\DTO\Message\GetMessageDTO" class="App\DTO\Message\GetMessageDTO" autowire="true" autoconfigure="true"/>
     <service id="App\DTO\User\AddUserDTO" class="App\DTO\User\AddUserDTO" autowire="true" autoconfigure="true"/>
     <service id="App\DTO\User\GetUserDTO" class="App\DTO\User\GetUserDTO" autowire="true" autoconfigure="true"/>
     <service id="App\DTO\User\LoginUserDTO" class="App\DTO\User\LoginUserDTO" autowire="true" autoconfigure="true"/>
+    <service id="App\Repository\MessageRepository" class="App\Repository\MessageRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
     <service id="App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
@@ -258,7 +258,6 @@
     <service id="App\Service\SecurityService" class="App\Service\SecurityService" autowire="true" autoconfigure="true">
       <argument>%env(SECRET_KEY)%</argument>
     </service>
-    <service id="App\Service\TonService" class="App\Service\TonService" autowire="true" autoconfigure="true"/>
     <service id="App\Service\UserService" class="App\Service\UserService" autowire="true" autoconfigure="true">
       <argument type="service" id="doctrine.orm.default_entity_manager"/>
       <argument type="service" id="App\Service\SecurityService"/>
@@ -291,7 +290,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag priority="-50" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.msBLmIM"/>
+      <argument type="service" id=".service_locator.F6vdjrP"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag priority="-100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">controller.argument_value_resolver</tag>
@@ -375,7 +374,7 @@
       </argument>
     </service>
     <service id="http_cache.store" class="Symfony\Component\HttpKernel\HttpCache\Store">
-      <argument>/home/senyacm/github/php/www.MbsHosting.com/backend/var/cache/dev/http_cache</argument>
+      <argument>/home/senyacm/github/php/PHP_pet_project/backend/var/cache/dev/http_cache</argument>
     </service>
     <service id="url_helper" class="Symfony\Component\HttpFoundation\UrlHelper">
       <argument type="service" id="request_stack"/>
@@ -385,7 +384,7 @@
       <tag name="container.no_preload"/>
       <argument type="tagged_iterator" tag="kernel.cache_warmer"/>
       <argument>true</argument>
-      <argument>/home/senyacm/github/php/www.MbsHosting.com/backend/var/cache/dev/App_KernelDevDebugContainerDeprecations.log</argument>
+      <argument>/home/senyacm/github/php/PHP_pet_project/backend/var/cache/dev/App_KernelDevDebugContainerDeprecations.log</argument>
     </service>
     <service id="cache_clearer" class="Symfony\Component\HttpKernel\CacheClearer\ChainCacheClearer">
       <argument type="tagged_iterator" tag="kernel.cache_clearer"/>
@@ -541,7 +540,7 @@
       </argument>
       <argument>UTF-8</argument>
       <argument type="service" id="debug.file_link_formatter" on-invalid="null"/>
-      <argument>/home/senyacm/github/php/www.MbsHosting.com/backend</argument>
+      <argument>/home/senyacm/github/php/PHP_pet_project/backend</argument>
       <argument type="service">
         <service>
           <argument type="service" id="request_stack"/>
@@ -577,7 +576,7 @@
       <tag name="console.command"/>
       <tag name="container.no_preload"/>
       <argument type="service" id="filesystem"/>
-      <argument>/home/senyacm/github/php/www.MbsHosting.com/backend</argument>
+      <argument>/home/senyacm/github/php/PHP_pet_project/backend</argument>
       <call method="setName">
         <argument>assets:install</argument>
       </call>
@@ -745,7 +744,7 @@
       <tag name="console.command"/>
       <tag name="container.no_preload"/>
       <argument>dev</argument>
-      <argument>/home/senyacm/github/php/www.MbsHosting.com/backend</argument>
+      <argument>/home/senyacm/github/php/PHP_pet_project/backend</argument>
       <call method="setName">
         <argument>debug:dotenv</argument>
       </call>
@@ -919,9 +918,9 @@
     <service id="cache.app" class="Symfony\Component\Cache\Adapter\FilesystemAdapter" public="true">
       <tag name="cache.pool"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>9OlOQWi9hU</argument>
+      <argument>Err5SXMVi-</argument>
       <argument>0</argument>
-      <argument>/home/senyacm/github/php/www.MbsHosting.com/backend/var/cache/dev/pools/app</argument>
+      <argument>/home/senyacm/github/php/PHP_pet_project/backend/var/cache/dev/pools/app</argument>
       <argument type="service" id="cache.default_marshaller" on-invalid="ignore"/>
       <call method="setLogger">
         <argument type="service" id="logger" on-invalid="ignore"/>
@@ -934,40 +933,40 @@
     <service id="cache.system" class="Symfony\Component\Cache\Adapter\AdapterInterface" public="true">
       <tag name="cache.pool"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>9913C3nZVw</argument>
+      <argument>5pfgpiAg55</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>/home/senyacm/github/php/www.MbsHosting.com/backend/var/cache/dev/pools/system</argument>
+      <argument>/home/senyacm/github/php/PHP_pet_project/backend/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
     <service id="cache.validator" class="Symfony\Component\Cache\Adapter\AdapterInterface">
       <tag name="cache.pool"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>3MVwrnOoIU</argument>
+      <argument>0MjQwAt6Nj</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>/home/senyacm/github/php/www.MbsHosting.com/backend/var/cache/dev/pools/system</argument>
+      <argument>/home/senyacm/github/php/PHP_pet_project/backend/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
     <service id="cache.serializer" class="Symfony\Component\Cache\Adapter\AdapterInterface">
       <tag name="cache.pool"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>jYa7qqMQrN</argument>
+      <argument>-iDlDl93rb</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>/home/senyacm/github/php/www.MbsHosting.com/backend/var/cache/dev/pools/system</argument>
+      <argument>/home/senyacm/github/php/PHP_pet_project/backend/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
     <service id="cache.property_info" class="Symfony\Component\Cache\Adapter\AdapterInterface">
       <tag name="cache.pool"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>erhoMz3HZt</argument>
+      <argument>DxDOvtftRp</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>/home/senyacm/github/php/www.MbsHosting.com/backend/var/cache/dev/pools/system</argument>
+      <argument>/home/senyacm/github/php/PHP_pet_project/backend/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -977,7 +976,7 @@
       <argument></argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>/home/senyacm/github/php/www.MbsHosting.com/backend/var/cache/dev/pools/system</argument>
+      <argument>/home/senyacm/github/php/PHP_pet_project/backend/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -996,7 +995,7 @@
       <tag name="monolog.logger" channel="cache"/>
       <argument></argument>
       <argument>0</argument>
-      <argument>/home/senyacm/github/php/www.MbsHosting.com/backend/var/cache/dev/pools/app</argument>
+      <argument>/home/senyacm/github/php/PHP_pet_project/backend/var/cache/dev/pools/app</argument>
       <argument type="service" id="cache.default_marshaller" on-invalid="ignore"/>
       <call method="setLogger">
         <argument type="service" id="logger" on-invalid="ignore"/>
@@ -1391,7 +1390,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.msBLmIM"/>
+      <argument type="service" id=".service_locator.F6vdjrP"/>
     </service>
     <service id="routing.resolver" class="Symfony\Component\Config\Loader\LoaderResolver">
       <call method="addLoader">
@@ -1486,7 +1485,7 @@
       <argument type="service" id=".service_locator.RTjHFcp.router.default"/>
       <argument>kernel::loadRoutes</argument>
       <argument type="collection">
-        <argument key="cache_dir">/home/senyacm/github/php/www.MbsHosting.com/backend/var/cache/dev</argument>
+        <argument key="cache_dir">/home/senyacm/github/php/PHP_pet_project/backend/var/cache/dev</argument>
         <argument key="debug">true</argument>
         <argument key="generator_class">Symfony\Component\Routing\Generator\CompiledUrlGenerator</argument>
         <argument key="generator_dumper_class">Symfony\Component\Routing\Generator\Dumper\CompiledUrlGeneratorDumper</argument>
@@ -1524,7 +1523,7 @@
       <argument type="service" id="request_stack"/>
       <argument type="service" id="router.request_context" on-invalid="ignore"/>
       <argument type="service" id="logger" on-invalid="ignore"/>
-      <argument>/home/senyacm/github/php/www.MbsHosting.com/backend</argument>
+      <argument>/home/senyacm/github/php/PHP_pet_project/backend</argument>
       <argument>true</argument>
     </service>
     <service id="Symfony\Bundle\FrameworkBundle\Controller\RedirectController" class="Symfony\Bundle\FrameworkBundle\Controller\RedirectController" public="true">
@@ -1551,7 +1550,7 @@
       <argument type="service" id="property_info.reflection_extractor" on-invalid="null"/>
     </service>
     <service id="secrets.vault" class="Symfony\Bundle\FrameworkBundle\Secrets\SodiumVault">
-      <argument>/home/senyacm/github/php/www.MbsHosting.com/backend/config/secrets/%env(default:kernel.environment:APP_RUNTIME_ENV)%</argument>
+      <argument>/home/senyacm/github/php/PHP_pet_project/backend/config/secrets/%env(default:kernel.environment:APP_RUNTIME_ENV)%</argument>
       <argument type="service" id="secrets.decryption_key" on-invalid="ignore"/>
       <argument>APP_SECRET</argument>
     </service>
@@ -1564,7 +1563,7 @@
       <argument>base64:default::SYMFONY_DECRYPTION_SECRET</argument>
     </service>
     <service id="secrets.local_vault" class="Symfony\Bundle\FrameworkBundle\Secrets\DotenvVault">
-      <argument>/home/senyacm/github/php/www.MbsHosting.com/backend/.env.dev.local</argument>
+      <argument>/home/senyacm/github/php/PHP_pet_project/backend/.env.dev.local</argument>
     </service>
     <service id="serializer" class="Symfony\Component\Serializer\Serializer">
       <argument type="collection">
@@ -1688,10 +1687,10 @@
           <service class="Symfony\Component\Serializer\Mapping\Loader\AttributeLoader"/>
         </argument>
       </argument>
-      <argument>/home/senyacm/github/php/www.MbsHosting.com/backend/var/cache/dev/serialization.php</argument>
+      <argument>/home/senyacm/github/php/PHP_pet_project/backend/var/cache/dev/serialization.php</argument>
     </service>
     <service id="serializer.mapping.cache.symfony" class="Psr\Cache\CacheItemPoolInterface">
-      <argument>/home/senyacm/github/php/www.MbsHosting.com/backend/var/cache/dev/serialization.php</argument>
+      <argument>/home/senyacm/github/php/PHP_pet_project/backend/var/cache/dev/serialization.php</argument>
       <argument type="service" id="cache.serializer"/>
       <factory class="Symfony\Component\Cache\Adapter\PhpArrayAdapter" method="create"/>
     </service>
@@ -1893,7 +1892,7 @@
       <argument>true</argument>
     </service>
     <service id="session.storage.factory.mock_file" class="Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorageFactory">
-      <argument>/home/senyacm/github/php/www.MbsHosting.com/backend/var/cache/dev/sessions</argument>
+      <argument>/home/senyacm/github/php/PHP_pet_project/backend/var/cache/dev/sessions</argument>
       <argument>MOCKSESSID</argument>
       <argument type="service">
         <service class="Symfony\Component\HttpFoundation\Session\Storage\MetadataBag">
@@ -2115,7 +2114,7 @@
         <argument key="default">600</argument>
       </argument>
     </service>
-    <service id=".1_ServiceLocator~OoVQNUo" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".1_ServiceLocator~fVLzzfZ" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <argument type="collection"/>
     </service>
     <service id="doctrine.orm.proxy_cache_warmer" class="Symfony\Bridge\Doctrine\CacheWarmer\ProxyCacheWarmer">
@@ -2133,7 +2132,7 @@
     <service id="doctrine.orm.configuration" class="Doctrine\ORM\Configuration" abstract="true"/>
     <service id="doctrine.orm.entity_manager.abstract" class="Doctrine\ORM\EntityManager" lazy="true" abstract="true"/>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory">
-      <argument type="service" id=".service_locator.QH6zDFT"/>
+      <argument type="service" id=".service_locator.KLANtoU"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -2322,7 +2321,7 @@
         <argument type="service" id=".doctrine.orm.default_metadata_driver"/>
       </call>
       <call method="setProxyDir">
-        <argument>/home/senyacm/github/php/www.MbsHosting.com/backend/var/cache/dev/doctrine/orm/Proxies</argument>
+        <argument>/home/senyacm/github/php/PHP_pet_project/backend/var/cache/dev/doctrine/orm/Proxies</argument>
       </call>
       <call method="setProxyNamespace">
         <argument>Proxies</argument>
@@ -2368,7 +2367,7 @@
     </service>
     <service id="doctrine.orm.default_attribute_metadata_driver" class="Doctrine\ORM\Mapping\Driver\AttributeDriver">
       <argument type="collection">
-        <argument>/home/senyacm/github/php/www.MbsHosting.com/backend/src/Entity</argument>
+        <argument>/home/senyacm/github/php/PHP_pet_project/backend/src/Entity</argument>
       </argument>
       <argument>true</argument>
     </service>
@@ -2425,7 +2424,7 @@
     <service id="doctrine.migrations.configuration" class="Doctrine\Migrations\Configuration\Configuration">
       <call method="addMigrationsDirectory">
         <argument>DoctrineMigrations</argument>
-        <argument>/home/senyacm/github/php/www.MbsHosting.com/backend/migrations</argument>
+        <argument>/home/senyacm/github/php/PHP_pet_project/backend/migrations</argument>
       </call>
       <call method="setAllOrNothing">
         <argument>false</argument>
@@ -2610,7 +2609,7 @@
       <argument type="service" id="filesystem"/>
       <argument type="service" id="maker.autoloader_util"/>
       <argument type="service" id="maker.file_link_formatter"/>
-      <argument>/home/senyacm/github/php/www.MbsHosting.com/backend</argument>
+      <argument>/home/senyacm/github/php/PHP_pet_project/backend</argument>
       <argument>null</argument>
     </service>
     <service id="maker.autoloader_finder" class="Symfony\Bundle\MakerBundle\Util\ComposerAutoloaderFinder">
@@ -2788,7 +2787,7 @@
     </service>
     <service id="maker.maker.make_migration" class="Symfony\Bundle\MakerBundle\Maker\MakeMigration">
       <tag name="maker.command"/>
-      <argument>/home/senyacm/github/php/www.MbsHosting.com/backend</argument>
+      <argument>/home/senyacm/github/php/PHP_pet_project/backend</argument>
       <argument type="service" id="maker.file_link_formatter"/>
     </service>
     <service id="maker.maker.make_stimulus_controller" class="Symfony\Bundle\MakerBundle\Maker\MakeStimulusController">
@@ -2857,17 +2856,16 @@
       <argument type="service" id="knpu.oauth2.provider.google"/>
       <argument type="service" id="request_stack"/>
     </service>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\GoogleOAuthController" class="App\Controller\GoogleOAuthController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\GoogleOAuthController" class="App\Controller\GoogleOAuthController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\GoogleOAuthController" class="App\Controller\GoogleOAuthController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\TonWalletController" class="App\Controller\TonWalletController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\TonWalletController" class="App\Controller\TonWalletController" autowire="true" abstract="true"/>
-    <service id=".instanceof.App\Controller\TonWalletController.0.App\Controller\TonWalletController" class="App\Controller\TonWalletController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\TonWalletController" class="App\Controller\TonWalletController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\IPFSMessagesController" class="App\Controller\IPFSMessagesController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\IPFSMessagesController" class="App\Controller\IPFSMessagesController" autowire="true" abstract="true"/>
+    <service id=".instanceof.App\Controller\IPFSMessagesController.0.App\Controller\IPFSMessagesController" class="App\Controller\IPFSMessagesController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\IPFSMessagesController" class="App\Controller\IPFSMessagesController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\UserController" class="App\Controller\UserController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\UserController" class="App\Controller\UserController" autowire="true" abstract="true"/>
     <service id=".instanceof.App\Controller\UserController.0.App\Controller\UserController" class="App\Controller\UserController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\UserController" class="App\Controller\UserController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\MessageRepository" class="App\Repository\MessageRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\MessageRepository" class="App\Repository\MessageRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\WalletRepository" class="App\Repository\WalletRepository" autowire="true" abstract="true"/>
@@ -3308,37 +3306,15 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.zHyJIs5" method="withContext"/>
     </service>
-    <service id=".service_locator.wLvy5Az" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="clientRegistry" type="service_closure" id="knpu.oauth2.registry"/>
-      </argument>
-    </service>
-    <service id=".service_locator.wLvy5Az.App\Controller\GoogleOAuthController::connectGoogle()" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\GoogleOAuthController::connectGoogle()"/>
-      <argument>App\Controller\GoogleOAuthController::connectGoogle()</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.wLvy5Az" method="withContext"/>
-    </service>
-    <service id=".service_locator.wLvy5Az.App\Controller\GoogleOAuthController::connectGoogleCheck()" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\GoogleOAuthController::connectGoogleCheck()"/>
-      <argument>App\Controller\GoogleOAuthController::connectGoogleCheck()</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.wLvy5Az" method="withContext"/>
-    </service>
-    <service id=".service_locator.msBLmIM" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.F6vdjrP" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.zHyJIs5.kernel::registerContainerConfiguration()"/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.zHyJIs5.kernel::registerContainerConfiguration()"/>
         <argument key="kernel::loadRoutes" type="service_closure" id=".service_locator.zHyJIs5.kernel::loadRoutes()"/>
         <argument key="App\Kernel::loadRoutes" type="service_closure" id=".service_locator.zHyJIs5.kernel::loadRoutes()"/>
-        <argument key="App\Controller\GoogleOAuthController::connectGoogle" type="service_closure" id=".service_locator.wLvy5Az.App\Controller\GoogleOAuthController::connectGoogle()"/>
-        <argument key="App\Controller\GoogleOAuthController::connectGoogleCheck" type="service_closure" id=".service_locator.wLvy5Az.App\Controller\GoogleOAuthController::connectGoogleCheck()"/>
         <argument key="kernel:registerContainerConfiguration" type="service_closure" id=".service_locator.zHyJIs5.kernel::registerContainerConfiguration()"/>
         <argument key="kernel:loadRoutes" type="service_closure" id=".service_locator.zHyJIs5.kernel::loadRoutes()"/>
-        <argument key="App\Controller\GoogleOAuthController:connectGoogle" type="service_closure" id=".service_locator.wLvy5Az.App\Controller\GoogleOAuthController::connectGoogle()"/>
-        <argument key="App\Controller\GoogleOAuthController:connectGoogleCheck" type="service_closure" id=".service_locator.wLvy5Az.App\Controller\GoogleOAuthController::connectGoogleCheck()"/>
       </argument>
     </service>
     <service id=".service_locator.va_rxC4" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -3405,9 +3381,10 @@
         <argument key="doctrine.orm.default_listeners.attach_entity_listeners" type="service_closure" id="doctrine.orm.default_listeners.attach_entity_listeners"/>
       </argument>
     </service>
-    <service id=".service_locator.QH6zDFT" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.KLANtoU" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="App\Repository\MessageRepository" type="service_closure" id="App\Repository\MessageRepository"/>
         <argument key="App\Repository\UserRepository" type="service_closure" id="App\Repository\UserRepository"/>
         <argument key="App\Repository\WalletRepository" type="service_closure" id="App\Repository\WalletRepository"/>
       </argument>
@@ -3462,15 +3439,9 @@
         <argument key="parameter_bag" type="service_closure" id="parameter_bag" on-invalid="ignore"/>
       </argument>
     </service>
-    <service id=".service_locator.ZyP9f7K.App\Controller\GoogleOAuthController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\GoogleOAuthController"/>
-      <argument>App\Controller\GoogleOAuthController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.ZyP9f7K" method="withContext"/>
-    </service>
-    <service id=".service_locator.ZyP9f7K.App\Controller\TonWalletController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\TonWalletController"/>
-      <argument>App\Controller\TonWalletController</argument>
+    <service id=".service_locator.ZyP9f7K.App\Controller\IPFSMessagesController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\IPFSMessagesController"/>
+      <argument>App\Controller\IPFSMessagesController</argument>
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.ZyP9f7K" method="withContext"/>
     </service>
@@ -3580,8 +3551,7 @@
       <call method="allowControllers">
         <argument type="collection">
           <argument>App\Kernel</argument>
-          <argument>App\Controller\GoogleOAuthController</argument>
-          <argument>App\Controller\TonWalletController</argument>
+          <argument>App\Controller\IPFSMessagesController</argument>
           <argument>App\Controller\UserController</argument>
           <argument>Doctrine\Bundle\DoctrineBundle\Controller\ProfilerController</argument>
         </argument>
@@ -4364,7 +4334,7 @@
     <service id="oauth2.registry" alias="knpu.oauth2.registry" public="true"/>
     <service id="KnpU\OAuth2ClientBundle\Client\Provider\GoogleClient" alias="knpu.oauth2.client.google"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.pRu6x_4" public="true"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.msBLmIM"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.F6vdjrP"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.BxSdgVt"/>
     <service id="Psr\Log\LoggerInterface" alias="logger"/>
     <service id="event_dispatcher" alias="debug.event_dispatcher" public="true"/>
@@ -4372,7 +4342,6 @@
     <service id="argument_resolver" alias="debug.argument_resolver"/>
     <service id="doctrine.orm.default_metadata_driver" alias=".doctrine.orm.default_metadata_driver"/>
     <service id=".service_locator.n_ENPtW" alias=".service_locator.zHyJIs5"/>
-    <service id=".service_locator.uH1Gyvk" alias=".service_locator.wLvy5Az"/>
     <service id=".service_locator.i9yrr1E" alias=".service_locator.ZyP9f7K"/>
   </services>
 </container>
