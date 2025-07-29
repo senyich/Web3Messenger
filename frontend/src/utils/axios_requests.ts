@@ -56,7 +56,7 @@ export const getUserInfo = async (token: string): Promise<UserInfoResponse> => {
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.message || 'Failed to get user info');
+      throw new Error(error.response?.data?.error || 'Failed to get user info');
     }
     throw new Error('Failed to get user info');
   }

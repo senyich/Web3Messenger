@@ -15,6 +15,8 @@
     "@rainbow-me/rainbowkit": "^2.2.8",
     "@tanstack/react-query": "^5.83.0",
     "axios": "^1.10.0",
+    "blockstore-level": "^2.0.3",
+    "datastore-level": "^11.0.3",
     "helia": "^5.5.0",
     "multiformats": "^13.3.7",
     "react": "^19.1.0",

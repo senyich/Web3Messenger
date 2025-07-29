@@ -27,7 +27,6 @@ class Message
     {
         return $this->id;
     }
-
     public function getCID(): ?string
     {
         return $this->CID;
