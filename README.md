@@ -134,6 +134,73 @@ HTTP OK
 ```
 
 ---
+## 🔗 Блокчейн API
+
+### 🌐 TRON
+
+#### 📊 Получение баланса TRX
+
+**Request**
+```bash
+curl -X GET http://localhost:8000/trx/balance/TXXXXXXXXXXXXXXXXXXXXXXXXX
+```
+
+---
+
+#### 💵 Получение баланса USDT (TRC-20)
+
+**Request**
+```bash
+curl -X GET http://localhost:8000/trx/usdt/balance/TXXXXXXXXXXXXXXXXXXXXXXXXX
+```
+
+---
+
+#### 📃 Информация о контракте USDT
+
+**Request**
+```bash
+curl -X GET http://localhost:8000/trx/usdt/info
+```
+
+---
+
+#### 🧾 Получение всех балансов (TRX + USDT)
+
+**Request**
+```bash
+curl -X GET http://localhost:8000/trx/balances/TXXXXXXXXXXXXXXXXXXXXXXXXX
+```
+
+---
+
+### 🌐 Ethereum
+
+#### 📊 Получение баланса ETH
+
+**Request**
+```bash
+curl -X GET http://localhost:8000/eth/balance/0xXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+```
+
+---
+
+#### 💰 Получение баланса токена ERC-20
+
+**Request**
+```bash
+curl -X GET http://localhost:8000/eth/balance/token/0xTokenAddress/0xUserAddress
+```
+
+---
+
+## 🧾 Примечания
+
+- Адреса должны быть валидными (Ethereum — `0x...`, TRON — `T...`).
+- Все запросы к `trx` и `eth` не требуют токена, если в контроллере не стоит защита `@UseGuards(AuthGuard)`. Если есть — добавляй:
+```bash
+-H "Authorization: Bearer <JWT ТОКЕН>"
+```
 
 ## 🧾 Примечания
 
