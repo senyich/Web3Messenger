@@ -21,7 +21,9 @@ class Message
     private ?\DateTime $timestamp = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $senderAddress = null;
+    private ?string $toAddress = null;
+    #[ORM\Column(length: 255)]
+    private ?string $fromAddress = null;
 
     public function getId(): ?int
     {
@@ -51,15 +53,25 @@ class Message
         return $this;
     }
 
-    public function getSenderAddress(): ?string
+    public function getToAddress(): ?string
     {
-        return $this->senderAddress;
+        return $this->toAddress;
     }
 
-    public function setSenderAddress(string $senderAddress): static
+    public function setToAddress(string $toAddress): static
     {
-        $this->senderAddress = $senderAddress;
+        $this->toAddress = $toAddress;
 
         return $this;
     }
+    public function getFromAddress(): ?string
+    {
+        return $this->fromAddress;
+    }
+    public function setFromAddress(string $fromAddress): static
+    {
+        $this->fromAddress = $fromAddress;
+        return $this;
+    }
+    
 }

@@ -19,16 +19,24 @@ class MessageRepository extends ServiceEntityRepository
        /**
         * @return Message[] Returns an array of Message objects
         */
-        public function findMessagesByOwnerAddress(string $senderAddress): array
+       public function findMessagesBySenderAddress(string $fromAddress): array
        {
            return $this->createQueryBuilder('m')
-               ->andWhere('m.senderAddress = :val')
-               ->setParameter('val', $senderAddress)
+               ->andWhere('m.fromAddress = :val')
+               ->setParameter('val', $fromAddress)
                ->getQuery()
                ->getResult()
            ;
        }
-
+        public function findMessagesByReceiverAddress(string $toAddress): array
+       {
+           return $this->createQueryBuilder('m')
+               ->andWhere('m.toAddress = :val')
+               ->setParameter('val', $toAddress)
+               ->getQuery()
+               ->getResult()
+           ;
+       }
        public function findMessageByCID(string $cid): ?Message
        {
            return $this->createQueryBuilder('m')

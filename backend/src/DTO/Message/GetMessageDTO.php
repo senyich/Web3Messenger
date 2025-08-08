@@ -8,7 +8,9 @@ class GetMessageDTO
     #[Groups(['message:read'])]
     public string $CID;
     #[Groups(['message:read'])]
-    public string $ownerAddress;
+    public string $fromAddress;
+     #[Groups(['message:read'])]
+    public string $toAddress;
     #[Groups(['message:read'])]
     public DateTime $timestamp;
 }

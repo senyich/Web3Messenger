@@ -7,8 +7,6 @@ import { LevelDatastore } from 'datastore-level';
 
 let heliaInstance: Helia | null = null;
 let jsonInstance: ReturnType<typeof json> | null = null;
-// const PROJECT_ID = 'b704286137144e42ba079b2b90cad659';
-// const PROJECT_SECRET = 'DQxTQsMUrFcIeJwoaan40VpD1BbRDW4+bq+1yWEaeXkGttRwnarKPw"'; 
 
 export const initIPFS = async (): Promise<Helia> => {
   if (!heliaInstance) {

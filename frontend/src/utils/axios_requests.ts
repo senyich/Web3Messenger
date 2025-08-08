@@ -62,6 +62,30 @@ export const getUserInfo = async (token: string): Promise<UserInfoResponse> => {
   }
 };
 
+export const findUser = async (token: string, username: string): Promise<UserInfoResponse> => {
+  try {
+    const response: AxiosResponse<UserInfoResponse> = await axios.get(
+      `${API_BASE_URL}/user/find`,
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        data: {
+          'username': username
+        }
+      }
+    );
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.error || 'Failed to get user info');
+    }
+    throw new Error('Failed to get user info');
+  }
+};
+
 export const validateJWT = async (token: string): Promise<AuthResponse> => {
   try {
     const response: AxiosResponse<AuthResponse> = await axios.get(
@@ -84,30 +108,6 @@ export const validateJWT = async (token: string): Promise<AuthResponse> => {
 };
 
 
-export const getMessages = async (token: string, ownerAddress: string): Promise<Message[]> => {
-  try {
-    const response: AxiosResponse<Message[]> = await axios.get(
-      `${API_BASE_URL}/message/get`,
-      {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        data: {
-          ownerAddress: ownerAddress
-        }
-      }
-    );
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.error || 'Failed to get messages');
-    }
-    throw new Error('Failed to get messages');
-  }
-};
-
 export const addMessage = async (token: string, params: AddMessageParams): Promise<void> => {
   try {
     await axios.post(
@@ -126,5 +126,29 @@ export const addMessage = async (token: string, params: AddMessageParams): Promi
       throw new Error(error.response?.data?.message || 'Failed to add message');
     }
     throw new Error('Failed to add message');
+  }
+};
+
+export const getMessages = async (token: string, ownerAddress: string): Promise<Message[]> => {
+  try {
+    const response: AxiosResponse<Message[]> = await axios.get(
+      `${API_BASE_URL}/message/get`,
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        params: { 
+          ownerAddress: ownerAddress
+        }
+      }
+    );
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.error || 'Failed to get messages');
+    }
+    throw new Error('Failed to get messages');
   }
 };

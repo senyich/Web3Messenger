@@ -14,6 +14,7 @@ return [
         '/api/user/login' => [[['_route' => 'user_auth', '_controller' => 'App\\Controller\\UserController::login'], null, ['POST' => 0, 'OPTIONS' => 1], null, false, false, null]],
         '/api/user/get' => [[['_route' => 'user_get', '_controller' => 'App\\Controller\\UserController::getByToken'], null, ['GET' => 0, 'OPTIONS' => 1], null, false, false, null]],
         '/api/user/validate' => [[['_route' => 'user_validate', '_controller' => 'App\\Controller\\UserController::validateUser'], null, ['GET' => 0, 'OPTIONS' => 1], null, false, false, null]],
+        '/api/user/find' => [[['_route' => 'user_find', '_controller' => 'App\\Controller\\UserController::getByUsername'], null, ['GET' => 0, 'OPTIONS' => 1], null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'

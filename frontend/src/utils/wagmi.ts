@@ -1,6 +1,6 @@
-import { http, createConfig, useReadContract } from 'wagmi'
-import { arbitrum, base, mainnet, optimism, polygon, sepolia, tron } from 'wagmi/chains'
-import { coinbaseWallet, walletConnect, metaMask, baseAccount, mock, injected} from 'wagmi/connectors'
+import { http, createConfig } from 'wagmi'
+import { arbitrum, base, mainnet, optimism, polygon, } from 'wagmi/chains'
+import { walletConnect, metaMask, baseAccount,} from 'wagmi/connectors'
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
 
 export const rainbowConfig = getDefaultConfig({
@@ -13,7 +13,6 @@ export const rainbowConfig = getDefaultConfig({
 export const config = createConfig({
   chains: [arbitrum, base, mainnet, optimism, polygon],
   connectors: [
-    coinbaseWallet(),
     walletConnect({ projectId: '41f192fac82827b3a5bfabefa6ac19fe' }),
     metaMask(),
     baseAccount(),

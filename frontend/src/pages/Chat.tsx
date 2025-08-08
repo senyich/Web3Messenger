@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FiSend, FiUser } from 'react-icons/fi';
-import { getUserInfo, validateJWT } from '../utils/axios_requests';
+import { FiSend, FiUser, FiSearch } from 'react-icons/fi';
+import { getUserInfo, findUser } from '../utils/axios_requests';
 import { storeToIPFS, getFromIPFS } from '../utils/ipfs';
 import { getMessages, addMessage } from '../utils/axios_requests';
 import type { UserInfoResponse } from '../interfaces/user_interfaces';
-import type { Message } from '../interfaces/message_interface';
+import type { Message, MessageContent } from '../interfaces/message_interface';
 import { useNavigate } from 'react-router-dom';
 
 interface LocalMessage extends Message {
@@ -22,6 +22,10 @@ const Chat: React.FC = () => {
   const [isLoadingMessages, setIsLoadingMessages] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<string>('');
   const [addressInput, setAddressInput] = useState<string>('');
+  const [usernameSearch, setUsernameSearch] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<UserInfoResponse[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchError, setSearchError] = useState<string | null>(null);
   const navigate = useNavigate();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -32,10 +36,8 @@ const Chat: React.FC = () => {
         if (!token) {
           throw new Error('Пользователь не авторизован');
         }
-        
         const userInfo: UserInfoResponse = await getUserInfo(token);
         setUserAddress(userInfo.address);
-        setSelectedAddress(userInfo.address); // Устанавливаем по умолчанию свой адрес
         setIsLoading(false);
       } catch (err) {
         localStorage.removeItem('authToken');
@@ -49,7 +51,7 @@ const Chat: React.FC = () => {
 
   useEffect(() => {
     const loadMessages = async () => {
-      if (!selectedAddress) return;
+      if (!selectedAddress || !userAddress) return;
       
       setIsLoadingMessages(true);
       setMessagesError(null);
@@ -58,12 +60,18 @@ const Chat: React.FC = () => {
         if (!token) {
           throw new Error('Пользователь не авторизован');
         }
-        const serverMessages: Message[] = await getMessages(token, selectedAddress);
+        const currentUserMessages = await getMessages(token, userAddress);
         
+        const selectedUserMessages = selectedAddress !== userAddress 
+          ? await getMessages(token, selectedAddress) 
+          : [];
+
+        const allMessages = [...currentUserMessages, ...selectedUserMessages];
+        console.log(allMessages)  
         const messagesWithContent = await Promise.all(
-          serverMessages.map(async (msg) => {
+          allMessages.map(async (msg) => {
             try {
-              const contentData = await getFromIPFS<{ content: string }>(msg.CID);
+              const contentData = await getFromIPFS<MessageContent>(msg.CID);
               return {
                 ...msg,
                 content: contentData.content
@@ -77,9 +85,16 @@ const Chat: React.FC = () => {
             }
           })
         );
-        const sortedMessages = messagesWithContent.sort(
+        
+        const filteredMessages = messagesWithContent.filter(msg => 
+          (msg.fromAddress === userAddress && msg.toAddress === selectedAddress) ||
+          (msg.fromAddress === selectedAddress && msg.toAddress === userAddress)
+        );
+        
+        const sortedMessages = filteredMessages.sort(
           (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
         );
+        
         setMessages(sortedMessages);
       } catch (err) {
         setMessagesError(err instanceof Error ? err.message : 'Ошибка загрузки сообщений');
@@ -89,14 +104,14 @@ const Chat: React.FC = () => {
     };
 
     loadMessages();
-  }, [selectedAddress]); // Зависимость от выбранного адреса
+  }, [selectedAddress, userAddress]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   const handleSendMessage = async () => {
-    if (!message.trim() || isSending || !userAddress) return;
+    if (!message.trim() || isSending || !userAddress || !selectedAddress) return;
 
     setIsSending(true);
     try {
@@ -104,31 +119,63 @@ const Chat: React.FC = () => {
       if (!token) {
         throw new Error('Пользователь не авторизован');
       }
-      const dataToStore = { content: message };
+      
+      const dataToStore: MessageContent = { 
+        content: message,
+      };
+      
       const cid = await storeToIPFS(dataToStore);
       
       await addMessage(token, {
         CID: cid,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        fromAddress: userAddress,
+        toAddress: selectedAddress
       });
 
       const newMessage: LocalMessage = {
         CID: cid,
         ownerAddress: userAddress,
         timestamp: new Date().toISOString(),
+        fromAddress: userAddress,
+        toAddress: selectedAddress,
         content: message
       };
-
-      // Добавляем сообщение только если смотрим свою историю
-      if (selectedAddress === userAddress) {
-        setMessages(prev => [newMessage, ...prev]);
-      }
+      
+      setMessages(prev => [newMessage, ...prev]);
       setMessage('');
     } catch (err) {
       setMessagesError(err instanceof Error ? err.message : 'Ошибка отправки сообщения');
     } finally {
       setIsSending(false);
     }
+  };
+
+  const handleSearchUser = async () => {
+    if (!usernameSearch.trim()) return;
+    setIsSearching(true);
+    setSearchError(null);
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        throw new Error('Пользователь не авторизован');
+      }
+      
+      const foundUser = await findUser(token, usernameSearch.trim());
+      setSearchResults([foundUser]);
+    } catch (err) {
+      setSearchResults([]);
+      setSearchError(err instanceof Error ? err.message : 'Ошибка поиска пользователя');
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  const handleSelectUser = (user: UserInfoResponse) => {
+    setSelectedAddress(user.address);
+    setAddressInput(user.address);
+    setSearchResults([]);
+    setUsernameSearch('');
   };
 
   const handleSelectAddress = () => {
@@ -174,10 +221,61 @@ const Chat: React.FC = () => {
   return (
     <div className="min-h-screen bg-beigeBrown-50 p-4">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-2xl font-bold text-beigeBrown-700 mb-6">Тестовый чат</h1>
+        <h1 className="text-2xl font-bold text-beigeBrown-700 mb-6">Чат</h1>
         
-        {/* Панель выбора пользователя */}
         <div className="bg-white rounded-lg p-4 mb-6 shadow">
+          <h2 className="text-lg font-medium text-beigeBrown-700 mb-3">Поиск пользователя</h2>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <div className="relative flex-1">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <FiUser className="text-beigeBrown-400" />
+              </div>
+              <input
+                type="text"
+                value={usernameSearch}
+                onChange={(e) => setUsernameSearch(e.target.value)}
+                placeholder="Введите имя пользователя"
+                className="pl-10 w-full border border-beigeBrown-200 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-beigeBrown-500"
+              />
+            </div>
+            <button
+              onClick={handleSearchUser}
+              disabled={isSearching || !usernameSearch.trim()}
+              className={`bg-beigeBrown-500 text-white px-4 py-2 rounded-lg hover:bg-beigeBrown-600 transition whitespace-nowrap flex items-center justify-center ${
+                isSearching || !usernameSearch.trim() ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+            >
+              {isSearching ? (
+                <span className="inline-block h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
+              ) : (
+                <FiSearch className="mr-2" />
+              )}
+              Найти
+            </button>
+          </div>
+
+          {searchError && (
+            <div className="mt-2 text-red-500 text-sm">{searchError}</div>
+          )}
+
+          {searchResults.length > 0 && (
+            <div className="mt-3 space-y-2">
+              {searchResults.map((user) => (
+                <div 
+                  key={user.address} 
+                  className="p-3 border border-beigeBrown-200 rounded-lg hover:bg-beigeBrown-50 cursor-pointer"
+                  onClick={() => handleSelectUser(user)}
+                >
+                  <div className="font-medium text-beigeBrown-700">{user.username}</div>
+                  <div className="text-sm text-beigeBrown-500 font-mono break-all">{user.address}</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="bg-white rounded-lg p-4 mb-6 shadow">
+          <h2 className="text-lg font-medium text-beigeBrown-700 mb-3">Выбор адреса для чата</h2>
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-1">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -206,7 +304,6 @@ const Chat: React.FC = () => {
           </div>
         </div>
 
-        {/* Информация о текущих адресах */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div className="bg-white rounded-lg p-4 shadow">
             <div className="flex items-center">
@@ -224,18 +321,19 @@ const Chat: React.FC = () => {
               <span className="font-medium text-beigeBrown-700">Просматриваемые сообщения:</span>
             </div>
             <p className="mt-1 text-beigeBrown-600 font-mono text-sm break-all">
-              {selectedAddress || "не выбраны"}
+              {selectedAddress === userAddress 
+                ? userAddress 
+                : `${selectedAddress} и ${userAddress}`}
             </p>
           </div>
         </div>
 
-        {/* Окно сообщений */}
         <div className="bg-white rounded-xl shadow-lg p-4 mb-6">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-medium text-beigeBrown-700">
               {selectedAddress === userAddress 
                 ? "Ваши сообщения" 
-                : `Сообщения пользователя`}
+                : `Диалог с пользователем`}
             </h2>
             {messages.length > 0 && (
               <span className="text-sm text-beigeBrown-500">
@@ -256,7 +354,7 @@ const Chat: React.FC = () => {
             ) : messages.length === 0 ? (
               <div className="text-center py-4 text-beigeBrown-500">
                 {selectedAddress 
-                  ? "Нет сообщений для этого адреса" 
+                  ? "Нет сообщений для этого диалога" 
                   : "Выберите адрес для просмотра сообщений"}
               </div>
             ) : (
@@ -264,7 +362,7 @@ const Chat: React.FC = () => {
                 <div 
                   key={`${msg.CID}-${index}`} 
                   className={`p-4 rounded-lg max-w-[80%] ${
-                    msg.ownerAddress === userAddress 
+                    msg.fromAddress === userAddress 
                       ? 'bg-beigeBrown-100 ml-auto' 
                       : 'bg-beigeBrown-50'
                   }`}
@@ -272,6 +370,11 @@ const Chat: React.FC = () => {
                   <p className="text-beigeBrown-700">{msg.content}</p>
                   <div className="text-xs text-beigeBrown-500 mt-1">
                     {new Date(msg.timestamp).toLocaleString()}
+                    {msg.fromAddress !== userAddress && (
+                      <div className="mt-1 text-xs text-beigeBrown-400">
+                        От: {msg.fromAddress.substring(0, 12)}...
+                      </div>
+                    )}
                   </div>
                 </div>
               ))
@@ -280,7 +383,6 @@ const Chat: React.FC = () => {
           </div>
         </div>
         
-        {/* Форма отправки сообщения */}
         <div className="bg-white rounded-xl shadow-lg p-4">
           <div className="flex">
             <textarea

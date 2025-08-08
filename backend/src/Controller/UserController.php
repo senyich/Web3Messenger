@@ -122,4 +122,34 @@ final class UserController extends AbstractController
             return new JsonResponse(["error"=>$ex->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
         }
     }
+    #[Route('/find', name: 'user_find', methods: ['GET', 'OPTIONS'])]
+    public function getByUsername(Request $request): JsonResponse 
+    {
+        $authHeader = $request->headers->get('Authorization');
+        if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+            return new JsonResponse(['error' => 'Токен не предоставлен'], 401);
+        }
+        $token = $matches[1];
+
+        $username = $request->query->get("username");
+        
+        try {
+            $isValid = $this->securityService->isTokenValid($token);
+            if (!$isValid) {
+                return new JsonResponse(["error" => "Токен невалиден"], JsonResponse::HTTP_BAD_REQUEST);
+            }
+            $user = $this->userRepository->findUserByUsername($username);
+            if(!$user)
+                return new JsonResponse(["error" => "Пользователь не найден"], JsonResponse::HTTP_BAD_REQUEST);
+            $userDto = new GetUserDTO();
+
+            $userDto->setId($user->getId());
+            $userDto->setAddress($user->getAddress());
+            $userDto->setUsername($user->getUserName());
+            $jsonContent = $this->serializer->serialize($userDto, 'json', ['groups' => ['user:read']]);
+            return JsonResponse::fromJsonString($jsonContent);
+        } catch (Exception $ex) {
+            return new JsonResponse(["error" => $ex->getMessage()], JsonResponse::HTTP_BAD_REQUEST);
+        }
+    }
 }

@@ -48,12 +48,15 @@ final class IPFSMessagesController extends AbstractController
         }
         $token = $matches[1];
         try{
-            $userData = $this->securityService->parseToken($token);            
-            $messages = $this->messageRepository->findMessagesByOwnerAddress($userData->getAddress());
+            if(!$this->securityService->isTokenValid($token))
+                return new JsonResponse(['error' => 'Токен не валиден'], 401);
+            $address = $request->query->get("ownerAddress");         
+            $messages = $this->messageRepository->findMessagesBySenderAddress($address);
             $retMessages = array_map(function (Message $message): GetMessageDTO {
                 $dto = new GetMessageDTO();
                 $dto->CID = $message->getCID();
-                $dto->ownerAddress = $message->getSenderAddress(); 
+                $dto->toAddress = $message->getToAddress(); 
+                $dto->fromAddress = $message->getFromAddress();
                 $dto->timestamp = $message->getTimestamp();
                 return $dto;
             }, $messages);
@@ -85,11 +88,12 @@ final class IPFSMessagesController extends AbstractController
                 return new JsonResponse([
                     'error' => 'Ошибка десериализации, переданы некорректные данные',
                 ], JsonResponse::HTTP_BAD_REQUEST);
-            }    
+        }    
         $message = new Message();
         $message->setCID($addMessageDTO->CID);
         $message->setTimestamp($addMessageDTO->timestamp);
-        $message->setSenderAddress($userData->getAddress());
+        $message->setFromAddress($addMessageDTO->fromAddress);
+        $message->setToAddress($addMessageDTO->toAddress);
         $this->entityManager->persist($message);
         $this->entityManager->flush();
         return new JsonResponse();

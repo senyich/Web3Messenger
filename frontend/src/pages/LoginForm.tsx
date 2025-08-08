@@ -1,10 +1,11 @@
+// LoginForm.tsx (обновленный)
 import React, { useEffect, useState } from 'react';
 import CustomLink from '../components/CustomLink';
-import { loginUser } from '../utils/axios_requests';
+import { loginUser, validateJWT } from '../utils/axios_requests';
 import { useNavigate } from 'react-router-dom';
-import { useAccount, useConnect, useDisconnect } from 'wagmi';
+import { useAccount } from 'wagmi';
 import { FiLock, FiArrowRight } from 'react-icons/fi';
-import WalletLabel from '../components/WalletLabel';
+import CryptoNavbar from '../components/CryptoNavbar';
 
 const LoginForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -15,8 +16,6 @@ const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   
   const account = useAccount();
-  const { connectors, connect, status, error: connectError } = useConnect();
-  const { disconnect } = useDisconnect();
 
   useEffect(() => {
     async function checkAuth() {
@@ -27,6 +26,7 @@ const LoginForm: React.FC = () => {
       }
 
       try {
+        const tokenData = await validateJWT(token);
         navigate('/');
       } catch (error) {
         localStorage.removeItem('authToken');
@@ -79,7 +79,6 @@ const LoginForm: React.FC = () => {
     <div className="min-h-screen bg-beigeBrown-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-          {/* Декоративный заголовок */}
           <div className="bg-gradient-to-r from-beigeBrown-500 to-beigeBrown-600 p-6 text-center">
             <div className="flex justify-center mb-3">
               <div className="bg-white/20 w-14 h-14 rounded-full flex items-center justify-center">
@@ -106,58 +105,7 @@ const LoginForm: React.FC = () => {
 
             <form className="space-y-5" onSubmit={handleFormSubmit}>
               <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-beigeBrown-700 mb-2 flex items-center">
-                    <WalletLabel className="mr-2 w-5 h-5 text-beigeBrown-500" />
-                    Криптокошелек
-                  </label>
-                  <div className="space-y-3">
-                    {connectors.map((connector) => (
-                      <button
-                        key={connector.uid}
-                        type="button"
-                        onClick={() => connect({ connector })}
-                        className="w-full flex items-center justify-between p-3 bg-beigeBrown-50 border border-beigeBrown-200 rounded-xl hover:bg-beigeBrown-100 transition-colors duration-200"
-                      >
-                        <div className="flex items-center">
-                          {connector.icon && (
-                            <img 
-                              src={connector.icon} 
-                              alt={connector.name} 
-                              className="w-6 h-6 mr-3"
-                            />
-                          )}
-                          <span className="text-beigeBrown-800 font-medium">{connector.name}</span>
-                        </div>
-                        <FiArrowRight className="text-beigeBrown-500" />
-                      </button>
-                    ))}
-                  </div>
-                  
-                  {account.status === 'connected' && (
-                    <div className="mt-3 p-3 bg-beigeBrown-50 rounded-xl text-beigeBrown-700 border border-beigeBrown-200">
-                      <div className="flex justify-between items-center">
-                        <div>
-                          <p className="font-medium">Подключен кошелек</p>
-                          <p className="text-xs truncate mt-1 text-beigeBrown-500">{account.address}</p>
-                        </div>
-                        <button 
-                          type="button"
-                          onClick={() => disconnect()}
-                          className="text-sm px-3 py-1 bg-white border border-beigeBrown-300 rounded-lg text-beigeBrown-700 hover:bg-beigeBrown-100 transition-colors"
-                        >
-                          Отключить
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {connectError && (
-                    <div className="mt-3 p-3 bg-red-50 text-red-700 rounded-xl text-sm border border-red-100">
-                      Ошибка подключения: {connectError.message}
-                    </div>
-                  )}
-                </div>
+                <CryptoNavbar />
 
                 <div className="relative">
                   <label htmlFor="password" className="block text-sm font-medium text-beigeBrown-700 mb-2 flex items-center">
